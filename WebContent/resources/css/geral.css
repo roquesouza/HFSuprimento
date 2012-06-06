@@ -1,0 +1,474 @@
+/*
+    Document   : geral
+    Created on : 08/08/2010, 11:15:24
+    Author     : roque souza
+    Description:
+        Purpose of the stylesheet follows.
+*/
+root {
+	display: block;	
+}
+
+.vermelho {
+	background-color: #cc0000 !important;
+	background-image: none !important;
+	color: #000000 !important;	
+}
+
+.verde {
+	background-color: green !important;
+	background-image: none !important;
+	color: #000000 !important;
+}
+
+.laranja {
+	background-color: gold !important;
+	background-image: none !important;
+	color: #000000 !important;
+}
+
+.azul {
+	background-color: #599fcf !important;
+	background-image: none !important;
+	color: #000000 !important;
+}
+
+.vermelho a {
+	background-color: #cc0000;
+}
+
+.azul,.azul .fc-event-skin,.azul a {
+	background-color: #599fcf;
+}
+
+.azulmarinho,.azulmarinho .fc-event-skin,.azulmarinho a {
+	background-color: darkblue;
+}
+
+.cinza,.cinza .fc-event-skin,.cinza a {
+	background-color: darkgray;
+}
+
+.cinzaclaro,.cinzaclaro .fc-event-skin,.cinzaclaro a {
+	background-color: lightgray;
+}
+
+.amarelo,.amarelo .fc-event-skin,.amarelo a {
+	background-color: gold;
+}
+
+.lista {
+	height: 16px;
+	width: 16px;
+	background-image: url(../images/list.png) !important;
+}
+
+.cadeado {
+	height: 32px;
+	width: 32px;
+	background-image: url(../images/cadeado.png) !important;
+	left: 30% !important;
+	top: 25% !important;
+}
+
+.cadeado16 {
+	height: 16px;
+	width: 16px;
+	background-image: url(../images/cadeado16.png) !important;
+	left: 30% !important;
+	top: 20% !important;
+}
+
+.upd16 {
+	height: 16px;
+	width: 16px;
+	background-image: url(../images/update16.png) !important;
+}
+
+.filtro16 {
+	height: 16px;
+	width: 16px;
+	background-image: url(../images/filter.png) !important;
+	left: 10% !important;
+}
+
+.salvar {
+	height: 16px;
+	width: 16px;
+	background-image: url(../images/salvar16.png) !important;
+}
+
+.imprimir {
+	height: 16px;
+	width: 16px;
+	background-image: url(../images/imprimir16.png) !important;
+}
+
+.travar {
+	height: 16px;
+	width: 16px;
+	background-image: url(../images/travar.png) !important;
+}
+
+.cancelar {
+	height: 24px;
+	width: 24px;
+	background-image: url(../images/delete.png) !important;
+}
+
+.add16 {
+	height: 16px;
+	width: 16px;
+	background-image: url(../images/plus16.png) !important;
+}
+
+.delete16 {
+	height: 16px;
+	width: 16px;
+	background-image: url(../images/delete16.png) !important;
+}
+
+.doc16 {
+	height: 16px;
+	width: 16px;
+	background-image: url(../images/doc.png) !important;
+}
+
+.copy16 {
+	height: 16px;
+	width: 16px;
+	background-image: url(../images/copy.png) !important;
+}
+
+.pesquisar {
+	height: 24px;
+	width: 24px;
+	background-image: url(../images/search.png) !important;
+	top: 35% !important;
+}
+
+.novo {
+	height: 24px;
+	width: 24px;
+	background-image: url(../images/novo.png) !important;
+	top: 35% !important;
+}
+
+.menuPrincipal {
+	text-align: left;
+	font-size: 11px;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+.ui-dialog_bkp {
+	width: auto !important;
+}
+
+.dialog80 {
+	width: 80% !important;
+	height: 80% !important;
+}
+
+.dialog20 {
+	width: 20% !important;
+	height: 20% !important;
+}
+
+.dialog60 {
+	width: 60% !important;
+	height: 60% !important;
+}
+
+.dialog70 {
+	width: 70% !important;
+	height: 70% !important;
+}
+
+.colunaInformativoAjax {
+	width: 13%;
+	height: 100%;
+	padding: 2px;
+	margin: 1em;
+	border-width: thin;
+	border-style: dotted;
+	line-height: 1.2em;
+	text-align: left;
+	font-size: 10px;
+}
+
+.colunaInformativo1 {
+	width: 32%;
+	height: 100%;
+	padding: 2px;
+	margin: 1em;
+	border-width: thin;
+	border-style: dotted;
+	line-height: 1.2em;
+	text-align: left;
+	font-size: 10px;
+}
+
+.colunaInformativo2 {
+	width: 15%;
+	padding: 2px;
+	margin: 1em;
+	border-width: thin;
+	border-style: dotted;
+	line-height: 1.2em;
+	text-align: left;
+	font-weight: bold;
+	font-size: 10px;
+}
+
+.colunaInformativo3 {
+	width: 20%;
+	padding: 2px;
+	margin: 1em;
+	border-width: thin;
+	border-style: dotted;
+	line-height: 0.5em;
+	text-align: center;
+	font-weight: bold;
+	font-size: 10px;
+}
+
+.colunaInformativo4 {
+	width: 15%;
+	padding: 2px;
+	margin: 1em;
+	border-width: thin;
+	border-style: dotted;
+	line-height: 0.5em;
+	text-align: center;
+	font-weight: bold;
+	font-size: 10px;
+}
+
+.colunaInformativo5 {
+	width: 5%;
+	padding: 2px;
+	background-color: #c0402a;
+	margin: 1em;
+	border-width: thin;
+	border-style: dotted;
+	line-height: 0.5em;
+	text-align: center;
+	font-weight: bold;
+	font-size: 10px;
+}
+
+.colunaEvolucao {
+	vertical-align: top;
+	font-size: 10px;
+	text-align: left;
+	min-width: 190px;
+}
+
+.colunaEvolucaoDetalhe {
+	vertical-align: top;
+	width: 95%;
+}
+
+.colunaFontePequena {
+	font-size: 10px;
+}
+
+.coluna2 {
+	width: 2%;
+}
+
+.coluna3 {
+	width: 3%;
+}
+
+.coluna5 {
+	width: 5%;
+}
+
+.coluna5_2 {
+	width: 5%;
+	vertical-align: top;
+}
+
+.coluna7 {
+	width: 7%;
+}
+
+.coluna10 {
+	width: 10%;
+}
+
+.coluna10_2 {
+	width: 10%;
+	vertical-align: top;
+}
+
+.coluna12 {
+	width: 12%;
+}
+
+.coluna13 {
+	width: 13%;
+}
+
+.coluna15 {
+	width: 15%;
+}
+
+.coluna15_2 {
+	width: 15%;
+	vertical-align: top;
+}
+
+.coluna18 {
+	width: 18%;
+}
+
+.coluna20 {
+	width: 20%;
+}
+
+.coluna20_2 {
+	width: 20%;
+	vertical-align: top;
+}
+
+.coluna20_3 {
+	width: 20%;
+	min-width: 130px;
+}
+
+.coluna23 {
+	width: 23%;
+}
+
+.coluna25 {
+	width: 25%;
+}
+
+.coluna25_2 {
+	width: 25%;
+	vertical-align: top;
+}
+
+.coluna30 {
+	width: 30%;
+}
+
+.coluna30_2 {
+	width: 30%;
+	vertical-align: top;
+}
+
+.coluna35 {
+	width: 35%;
+}
+
+.coluna40 {
+	width: 40% !important;
+}
+
+.coluna40_2 {
+	width: 40%;
+	vertical-align: top;
+}
+
+.coluna45 {
+	width: 45%;
+}
+
+.coluna45_2 {
+	width: 45%;
+	vertical-align: top;
+}
+
+.coluna50 {
+	width: 50% !important;
+}
+
+.coluna50_2 {
+	width: 50%;
+	vertical-align: top;
+}
+
+.coluna55 {
+	width: 55%;
+}
+
+.coluna55_2 {
+	width: 55%;
+	vertical-align: top;
+}
+
+.coluna60 {
+	width: 60% !important;
+}
+
+.coluna60_2 {
+	width: 60%;
+	vertical-align: top;
+}
+
+.coluna70 {
+	width: 70%;
+}
+
+.coluna70_2 {
+	width: 70%;
+	vertical-align: top;
+}
+
+.coluna75 {
+	width: 75%;
+}
+
+.coluna80 {
+	width: 80%;
+}
+
+.coluna80_2 {
+	width: 80%;
+	vertical-align: top;
+}
+
+.coluna80_3 {
+	width: 80%;
+	min-width: 400px;
+}
+
+.coluna90 {
+	width: 90%;
+}
+
+.coluna90_2 {
+	width: 90%;
+	vertical-align: top;
+}
+
+.coluna95 {
+	width: 95%;
+}
+
+.coluna100 {
+	width: 100%;
+}
+
+.coluna100_2 {
+	width: 100%;
+	vertical-align: top;
+}
+
+.caixadialogo {
+	width: 400px;
+	position: absolute;
+	margin-left: 250px;
+	margin-top: 90px;
+}
+
+.list16 {
+	height: 16px;
+	width: 16px;
+	background-image: url(../images/list.png) !important;
+}
+

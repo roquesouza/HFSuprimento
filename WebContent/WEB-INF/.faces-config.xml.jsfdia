@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:*" PATH="*" SHAPE="32,17,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:0" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="sucesso::#pages#cotacao.xhtml" NAME="output"
+    PATH="/pages/cotacao.xhtml" TARGET="rules:#pages#cotacao.xhtml"
+    TITLE="sucesso" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="erroValidacao::#pages#cotacao.xhtml"
+    NAME="output1" PATH="/pages/cotacao.xhtml"
+    TARGET="rules:#pages#cotacao.xhtml" TITLE="erroValidacao" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#pages#cotacao.xhtml"
+  PATH="/pages/cotacao.xhtml" SHAPE="256,33,0,0" model-entity="JSFProcessGroup"/>
+</PROCESS>

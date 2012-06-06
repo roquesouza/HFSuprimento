@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns:f="http://java.sun.com/jsf/core" contentType="text/html" encoding='UTF-8'>
+	<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title>HFSuprimento - Sistema de Cotação - SM Consultoria</title>
+	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/geral.css" />
+	<script src="#{request.contextPath}/resources/js/funcoes.js" type="text/javascript" />
+</h:head>
+
+<h:body id="bodyDashBoard" style="font-size: 11px">
+
+	<ui:param name="mbean" value="${cotacaoProdutoFornecedorFaces}" />
+	<ui:param name="mbeanModel" value="${cotacaoProdutoFornecedorFaces.crudModel}" />
+
+	<ui:param name="lista" value="grid" />
+
+	<h:form id="tabsCRUD">
+
+		<p:layout fullPage="true">
+
+			<p:layoutUnit id="areaTrabalho" header="Lista de Cotação N° #{cotacaoProdutoFornecedorFaces.crudModel.cotacaoProdutoModel.cotacaoModel.id}" position="center">
+
+				<h:panelGrid columns="1" style="width: 100%">
+
+					<p:fieldset legend="Informações do Fornecedor" style="width: 98%" rendered="#{!empty cotacaoProdutoFornecedorFaces.crudModel.fornecedorModel}">
+
+						<h:panelGrid columns="3" columnClasses="coluna10, coluna20, coluna70" style="width: 100%">
+
+							<h:outputLabel value="Tipo" />
+							<h:outputLabel value="Identificador" />
+							<h:outputLabel value="Fornecedor" />
+							
+							<h:outputText value="#{cotacaoProdutoFornecedorFaces.crudModel.fornecedorModel.tipoIdentificadorModel.descricao}" />
+							<h:outputText value="#{cotacaoProdutoFornecedorFaces.crudModel.fornecedorModel.identificador}" />
+							<h:outputText value="#{cotacaoProdutoFornecedorFaces.crudModel.fornecedorModel.razaoSocial}" />
+
+						</h:panelGrid>
+
+					</p:fieldset>
+
+					<p:dataTable emptyMessage="Nenhum Item encontrado." id="gridPesquisa" value="#{mbean[lista]}" var="linha">
+
+						<p:column headerText="N° Cotacao" styleClass="coluna5">
+							<h:outputLabel value="#{linha.cotacaoProdutoModel.cotacaoModel.id}" />
+						</p:column>
+
+						<p:column styleClass="coluna5" headerText="Data Validade">
+							<h:outputText value="#{linha.cotacaoProdutoModel.cotacaoModel.dataValidade}">
+								<f:convertDateTime locale="pt_BR" pattern="dd/MM/YYYY" />
+							</h:outputText>
+						</p:column>
+
+						<p:column styleClass="coluna50" headerText="Produto">
+							<h:outputLabel value="#{linha.cotacaoProdutoModel.produtoModel.nomePrincipal}" />
+						</p:column>
+
+						<p:column styleClass="coluna10" headerText="Unidade">
+							<h:outputLabel value="#{linha.cotacaoProdutoModel.produtoModel.unidadeMedidaModel.descricao}" />
+						</p:column>
+
+						<p:column styleClass="coluna10" headerText="Quantidade">
+							<h:outputLabel value="#{linha.cotacaoProdutoModel.quantidadeLiberada}">
+								<f:convertNumber type="number" pattern="#,###,##0.##" locale="pt_BR" />
+							</h:outputLabel>
+						</p:column>
+
+						<p:column styleClass="coluna10" headerText="Valor Unitário R$">
+							<p:inputText onkeyup="return mascaraMoeda(this);" style="width: 90%; !important" value="#{linha.valor}">
+								<f:convertNumber type="number" pattern="###,###,##0.00" locale="pt_BR" />
+								<f:ajax event="change" render="itValorTotal" />
+							</p:inputText>
+						</p:column>
+
+						<p:column styleClass="coluna10" headerText="Valor R$">
+							<p:inputText id="itValorTotal" disabled="true" style="width: 90%; !important" value="#{linha.valorTotal}">
+								<f:convertNumber type="number" pattern="###,###,##0.00" locale="pt_BR" />
+							</p:inputText>
+						</p:column>
+
+					</p:dataTable>
+
+
+					<p:commandButton type="button" rendered="#{!empty mbean[lista]}" id="btnSalvar" value="Salvar" icon="salvar" onclick="cdAlterar.show()" style="width: 110px" />
+
+				</h:panelGrid>
+
+			</p:layoutUnit>
+
+			<p:confirmDialog message="Confirma gravação das cotação?" header="Aviso" severity="alert" widgetVar="cdAlterar" modal="true" ajax="false" appendToBody="true">
+				<p:commandButton global="true" value="Sim" onclick="cdAlterar.hide()" action="#{cotacaoProdutoFornecedorFaces.atualizarCotacaoFornecedor}" />
+				<p:commandButton value="Nao" onclick="cdAlterar.hide()" />
+			</p:confirmDialog>
+
+		</p:layout>
+
+	</h:form>
+
+</h:body>
+	</html>
+</f:view>
