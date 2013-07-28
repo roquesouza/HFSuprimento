@@ -10,10 +10,7 @@
 
 <h:body id="bodyDashBoard" style="font-size: 11px">
 
-	<ui:param name="mbean" value="${cotacaoProdutoFornecedorFaces}" />
-	<ui:param name="mbeanModel" value="${cotacaoProdutoFornecedorFaces.crudModel}" />
-
-	<ui:param name="lista" value="grid" />
+	<p:growl autoUpdate="true" showDetail="true" showSummary="false"/>
 
 	<h:form id="tabsCRUD">
 
@@ -39,7 +36,7 @@
 
 					</p:fieldset>
 
-					<p:dataTable emptyMessage="Nenhum Item encontrado." id="gridPesquisa" value="#{mbean[lista]}" var="linha">
+					<p:dataTable emptyMessage="Nenhum Item encontrado." id="gridPesquisa" value="#{cotacaoProdutoFornecedorFaces.grid}" var="linha">
 
 						<p:column headerText="N° Cotacao" styleClass="coluna5">
 							<h:outputLabel value="#{linha.cotacaoProdutoModel.cotacaoModel.id}" />
@@ -47,7 +44,7 @@
 
 						<p:column styleClass="coluna5" headerText="Data Validade">
 							<h:outputText value="#{linha.cotacaoProdutoModel.cotacaoModel.dataValidade}">
-								<f:convertDateTime locale="pt_BR" pattern="dd/MM/YYYY" />
+								<f:convertDateTime locale="pt_BR" pattern="dd/MM/yyyy" />
 							</h:outputText>
 						</p:column>
 
@@ -81,13 +78,13 @@
 					</p:dataTable>
 
 
-					<p:commandButton type="button" rendered="#{!empty mbean[lista]}" id="btnSalvar" value="Salvar" icon="salvar" onclick="cdAlterar.show()" style="width: 110px" />
+					<p:commandButton type="button" rendered="#{!empty cotacaoProdutoFornecedorFaces.grid}" id="btnSalvar" value="Salvar" icon="salvar" onclick="cdAlterar.show()" style="width: 110px" />
 
 				</h:panelGrid>
 
 			</p:layoutUnit>
 
-			<p:confirmDialog message="Confirma gravação das cotação?" header="Aviso" severity="alert" widgetVar="cdAlterar" modal="true" ajax="false" appendToBody="true">
+			<p:confirmDialog message="Confirma gravação da cotação?" header="Aviso" severity="alert" widgetVar="cdAlterar" modal="true" ajax="false" appendToBody="true">
 				<p:commandButton global="true" value="Sim" onclick="cdAlterar.hide()" action="#{cotacaoProdutoFornecedorFaces.atualizarCotacaoFornecedor}" />
 				<p:commandButton value="Nao" onclick="cdAlterar.hide()" />
 			</p:confirmDialog>
