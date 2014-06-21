@@ -1,78 +1,57 @@
 package br.com.hfsuprimento.dao;
 
+import java.sql.Timestamp;
 import java.util.List;
 
-import br.com.hfsuprimento.model.CotacaoModel;
 import br.com.hfsuprimento.model.CotacaoProdutoFornecedorModel;
-import br.com.hfsuprimento.model.CotacaoProdutoModel;
+import br.com.hfsuprimento.model.FabricanteModel;
 import br.com.topsys.database.TSDataBaseBrokerIf;
 import br.com.topsys.database.factory.TSDataBaseBrokerFactory;
 import br.com.topsys.exception.TSApplicationException;
 
 public final class CotacaoProdutoFornecedorDAO {
 
-	@SuppressWarnings("unchecked")
-	public List<CotacaoProdutoFornecedorModel> pesquisar(final CotacaoProdutoModel model) {
+	public CotacaoProdutoFornecedorModel obter(String hash) {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
 
-		broker.setPropertySQL("cotacaoprodutofornecedordao.pesquisarporproduto", model.getProdutoModel().getId(), model.getCotacaoModel().getId());
+		broker.setPropertySQL("cotacaoprodutofornecedordao.obter", hash);
 
-		return broker.getCollectionBean(CotacaoProdutoFornecedorModel.class, "fornecedorModel.id", "cotacaoProdutoModel.id");
+		return (CotacaoProdutoFornecedorModel) broker.getObjectBean(CotacaoProdutoFornecedorModel.class, "cotacaoProdutoModel.cotacaoModel.id", "fornecedorModel.id", "fornecedorModel.nomeFantasia");
 
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<CotacaoProdutoFornecedorModel> pesquisar(CotacaoProdutoFornecedorModel model) {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
 
-		broker.setPropertySQL("cotacaoprodutofornecedordao.pesquisar", model.getCotacaoProdutoModel().getId());
+		broker.setPropertySQL("cotacaoprodutofornecedordao.pesquisar", model.getCotacaoProdutoModel().getCotacaoModel().getId(), model.getFornecedorModel().getId());
 
-		return broker.getCollectionBean(CotacaoProdutoFornecedorModel.class, "id", "fornecedorModel.id", "fornecedorModel.identificador", "fornecedorModel.nomeFantasia", "valor", "flagSelecionado");
+		return broker.getCollectionBean(CotacaoProdutoFornecedorModel.class, "id", "cotacaoProdutoModel.cotacaoModel.id", "cotacaoProdutoModel.produtoModel.id", "cotacaoProdutoModel.produtoModel.nomePrincipal", "cotacaoProdutoModel.produtoModel.unidadeMedidaModel.descricao", "cotacaoProdutoModel.quantidadeSolicitada", "cotacaoProdutoModel.observacao", "cotacaoProdutoModel.id", "fornecedorModel.id", "fornecedorModel.nomeFantasia", "valor", "observacao", "dataAtualizacao", "fabricanteModel.id", "fabricanteModel.nome");
 
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	public List<CotacaoProdutoFornecedorModel> pesquisarPorFornecedor(CotacaoProdutoFornecedorModel model) {
+	public List<FabricanteModel> pesquisarFabricantesAutorizados(CotacaoProdutoFornecedorModel model) {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
 
-		broker.setPropertySQL("cotacaoprodutofornecedordao.pesquisarporfornecedor", model.getCotacaoProdutoModel().getCotacaoModel().getId(), model.getFornecedorModel().getId());
+		broker.setPropertySQL("cotacaoprodutofornecedordao.pesquisarfabricantesautorizados", model.getCotacaoProdutoModel().getProdutoModel().getId());
 
-		return broker.getCollectionBean(CotacaoProdutoFornecedorModel.class, "id", "cotacaoProdutoModel.cotacaoModel.id", "cotacaoProdutoModel.cotacaoModel.dataEnvio", "cotacaoProdutoModel.cotacaoModel.dataValidade", "cotacaoProdutoModel.produtoModel.id", "cotacaoProdutoModel.produtoModel.nomePrincipal", "cotacaoProdutoModel.produtoModel.unidadeMedidaModel.descricao", "cotacaoProdutoModel.quantidadeSolicitada", "cotacaoProdutoModel.quantidadeLiberada", "valor");
-
-	}
-
-	public int inserir(CotacaoModel model) throws TSApplicationException {
-
-		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
-
-		broker.setPropertySQL("cotacaoprodutofornecedordao.inserir", model.getId());
-
-		return broker.execute();
+		return broker.getCollectionBean(FabricanteModel.class, "id", "nome");
 
 	}
-	
+
 	public CotacaoProdutoFornecedorModel alterar(CotacaoProdutoFornecedorModel model) throws TSApplicationException {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
 
-		broker.setPropertySQL("cotacaoprodutofornecedordao.alterar", model.getValor(), model.getId());
+		broker.setPropertySQL("cotacaoprodutofornecedordao.alterar", model.getValor(), model.getFabricanteModel().getId(), model.getObservacao(), new Timestamp(model.getDataAtualizacao().getTime()), model.getId());
 
 		broker.execute();
 
 		return null;
-	}
-
-	public void selecionarCotacaoProdutoFornecedor(CotacaoProdutoFornecedorModel model) throws TSApplicationException {
-
-		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
-
-		broker.setPropertySQL("cotacaoprodutofornecedordao.liberarcotacao", model.getFlagSelecionado(), model.getId());
-
-		broker.execute();
-
 	}
 
 }

@@ -2,6 +2,8 @@ package br.com.hfsuprimento.model;
 
 import java.io.Serializable;
 
+import br.com.topsys.util.TSUtil;
+
 @SuppressWarnings("serial")
 public class StatusCotacaoModel implements Serializable {
 
@@ -18,7 +20,7 @@ public class StatusCotacaoModel implements Serializable {
 	  }
 
 	  public Long getId() {   
-	    return id;
+	    return TSUtil.tratarLong(id);
 	  }
 
 	  public void setId(Long id) {

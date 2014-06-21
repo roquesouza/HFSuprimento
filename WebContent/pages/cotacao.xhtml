@@ -5,87 +5,99 @@
 <h:head>
 	<title>HFSuprimento - Sistema de Cotação - SM Consultoria</title>
 	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/geral.css" />
-	<script src="#{request.contextPath}/resources/js/funcoes.js" type="text/javascript" />
+
+	<script>
+		function MaskMonetario(v) {
+			v = v.replace(/\D/g, ""); // Remove tudo o que n�o � d�gito
+			v = v.replace(/(\d{2})$/, ",$1"); // Coloca a virgula
+			v = v.replace(/(\d+)(\d{3},\d{2})$/g, "$1.$2"); // Coloca o primeiro ponto
+			var qtdLoop = (v.length - 3) / 3;
+			var count = 0;
+			while (qtdLoop > count) {
+				count++;
+				v = v.replace(/(\d+)(\d{3}.*)/, "$1.$2"); // Coloca o resto dos pontos
+			}
+			v = v.replace(/^(0)(\d)/g, "$2"); // Coloca h�fen entre o quarto e o
+			// quinto d�gitos
+			return v;
+		}
+		function mascaraMoeda(campo) {
+			campo.value = MaskMonetario(campo.value);
+		}
+	</script>
+
 </h:head>
 
-<h:body id="bodyDashBoard" style="font-size: 11px">
+<h:body id="bodyDashBoard">
 
-	<p:growl autoUpdate="true" showDetail="true" showSummary="false"/>
-
-	<h:form id="tabsCRUD">
+	<p:growl autoUpdate="true" showDetail="true" showSummary="false" />
+	
+	<h:panelGroup rendered="#{cotacaoProdutoFornecedorFaces.cotacaoProdutoFornecedorModel == null}">
+		<ui:include src="erro.html" />
+	</h:panelGroup>
+	
+	<h:form id="tabsCRUD" prependId="false" rendered="#{cotacaoProdutoFornecedorFaces.cotacaoProdutoFornecedorModel != null}" style="font-size: 11px">
 
 		<p:layout fullPage="true">
 
-			<p:layoutUnit id="areaTrabalho" header="Lista de Cotação N° #{cotacaoProdutoFornecedorFaces.crudModel.cotacaoProdutoModel.cotacaoModel.id}" position="center">
+			<p:layoutUnit id="areaTrabalho" header="Fornecedor: #{cotacaoProdutoFornecedorFaces.cotacaoProdutoFornecedorModel.fornecedorModel.nomeFantasia}" position="center">
 
 				<h:panelGrid columns="1" style="width: 100%">
 
-					<p:fieldset legend="Informações do Fornecedor" style="width: 98%" rendered="#{!empty cotacaoProdutoFornecedorFaces.crudModel.fornecedorModel}">
+					<p:fieldset legend="Produtos da cotação número #{cotacaoProdutoFornecedorFaces.cotacaoProdutoFornecedorModel.cotacaoProdutoModel.cotacaoModel.id}" style="width: 98%">
 
-						<h:panelGrid columns="3" columnClasses="coluna10, coluna20, coluna70" style="width: 100%">
+						<p:dataTable id="gridPesquisa" value="#{cotacaoProdutoFornecedorFaces.grid}" var="linha" emptyMessage="Nenhum item encontrado">
 
-							<h:outputLabel value="Tipo" />
-							<h:outputLabel value="Identificador" />
-							<h:outputLabel value="Fornecedor" />
-							
-							<h:outputText value="#{cotacaoProdutoFornecedorFaces.crudModel.fornecedorModel.tipoIdentificadorModel.descricao}" />
-							<h:outputText value="#{cotacaoProdutoFornecedorFaces.crudModel.fornecedorModel.identificador}" />
-							<h:outputText value="#{cotacaoProdutoFornecedorFaces.crudModel.fornecedorModel.razaoSocial}" />
+							<p:column styleClass="coluna30" headerText="Produto">
+								<h:outputLabel value="#{linha.cotacaoProdutoModel.produtoModel.nomePrincipal}" />
+							</p:column>
 
-						</h:panelGrid>
+							<p:column styleClass="coluna10" headerText="Unidade">
+								<h:outputLabel value="#{linha.cotacaoProdutoModel.produtoModel.unidadeMedidaModel.descricao}" />
+							</p:column>
+
+							<p:column styleClass="coluna10" headerText="Quantidade">
+								<h:outputLabel value="#{linha.cotacaoProdutoModel.quantidadeSolicitada}">
+									<f:convertNumber type="number" pattern="#,###,##0.##" locale="pt_BR" />
+								</h:outputLabel>
+							</p:column>
+
+							<p:column styleClass="coluna10" headerText="Valor Unitário R$">
+								<p:inputText style="width: 90%;" value="#{linha.valor}" onkeyup="return mascaraMoeda(this)">
+									<f:convertNumber type="number" pattern="###,###,##0.00" locale="pt_BR" />
+									<p:ajax global="false" event="blur" process="@this" update=":tabsCRUD:gridPesquisa" />
+								</p:inputText>
+							</p:column>
+
+							<p:column styleClass="coluna10" headerText="Valor Total R$">
+								<p:inputText style="width: 90%;" disabled="true" value="#{linha.valorTotal}">
+									<f:convertNumber type="number" pattern="###,###,##0.00" locale="pt_BR" />
+								</p:inputText>
+							</p:column>
+
+							<p:column headerText="Fabricante" styleClass="coluna15">
+								<h:selectOneMenu value="#{linha.fabricanteModel.id}" styleClass="combo" style="width:95%">
+									<f:selectItem itemLabel="Não selecionado" itemValue="" />
+									<f:selectItems value="#{linha.cotacaoProdutoModel.produtoModel.fabricantesAutorizados}" var="fab" itemLabel="#{fab.nome}" itemValue="#{fab.id}" />
+								</h:selectOneMenu>
+							</p:column>
+
+							<p:column headerText="Observação" styleClass="coluna25">
+								<p:inputTextarea value="#{linha.observacao}" maxlength="995" rows="2" autoResize="false" style="width: 98%" />
+							</p:column>
+
+						</p:dataTable>
+
+						<p:commandButton type="button" rendered="#{!empty cotacaoProdutoFornecedorFaces.grid}" id="btnSalvar" value="Gravar" icon="salvar" onclick="cdAlterar.show()" style="margin-top: 10px" />
 
 					</p:fieldset>
-
-					<p:dataTable emptyMessage="Nenhum Item encontrado." id="gridPesquisa" value="#{cotacaoProdutoFornecedorFaces.grid}" var="linha">
-
-						<p:column headerText="N° Cotacao" styleClass="coluna5">
-							<h:outputLabel value="#{linha.cotacaoProdutoModel.cotacaoModel.id}" />
-						</p:column>
-
-						<p:column styleClass="coluna5" headerText="Data Validade">
-							<h:outputText value="#{linha.cotacaoProdutoModel.cotacaoModel.dataValidade}">
-								<f:convertDateTime locale="pt_BR" pattern="dd/MM/yyyy" />
-							</h:outputText>
-						</p:column>
-
-						<p:column styleClass="coluna50" headerText="Produto">
-							<h:outputLabel value="#{linha.cotacaoProdutoModel.produtoModel.nomePrincipal}" />
-						</p:column>
-
-						<p:column styleClass="coluna10" headerText="Unidade">
-							<h:outputLabel value="#{linha.cotacaoProdutoModel.produtoModel.unidadeMedidaModel.descricao}" />
-						</p:column>
-
-						<p:column styleClass="coluna10" headerText="Quantidade">
-							<h:outputLabel value="#{linha.cotacaoProdutoModel.quantidadeLiberada}">
-								<f:convertNumber type="number" pattern="#,###,##0.##" locale="pt_BR" />
-							</h:outputLabel>
-						</p:column>
-
-						<p:column styleClass="coluna10" headerText="Valor Unitário R$">
-							<p:inputText onkeyup="return mascaraMoeda(this);" style="width: 90%; !important" value="#{linha.valor}">
-								<f:convertNumber type="number" pattern="###,###,##0.00" locale="pt_BR" />
-								<f:ajax event="change" render="itValorTotal" />
-							</p:inputText>
-						</p:column>
-
-						<p:column styleClass="coluna10" headerText="Valor R$">
-							<p:inputText id="itValorTotal" disabled="true" style="width: 90%; !important" value="#{linha.valorTotal}">
-								<f:convertNumber type="number" pattern="###,###,##0.00" locale="pt_BR" />
-							</p:inputText>
-						</p:column>
-
-					</p:dataTable>
-
-
-					<p:commandButton type="button" rendered="#{!empty cotacaoProdutoFornecedorFaces.grid}" id="btnSalvar" value="Salvar" icon="salvar" onclick="cdAlterar.show()" style="width: 110px" />
 
 				</h:panelGrid>
 
 			</p:layoutUnit>
 
-			<p:confirmDialog message="Confirma gravação da cotação?" header="Aviso" severity="alert" widgetVar="cdAlterar" modal="true" ajax="false" appendToBody="true">
-				<p:commandButton global="true" value="Sim" onclick="cdAlterar.hide()" action="#{cotacaoProdutoFornecedorFaces.atualizarCotacaoFornecedor}" />
+			<p:confirmDialog message="Confirma gravação da cotação?" header="Aviso" severity="alert" widgetVar="cdAlterar" modal="true">
+				<p:commandButton global="true" value="Sim" onclick="cdAlterar.hide()" action="#{cotacaoProdutoFornecedorFaces.updateEvent}" />
 				<p:commandButton value="Nao" onclick="cdAlterar.hide()" />
 			</p:confirmDialog>
 

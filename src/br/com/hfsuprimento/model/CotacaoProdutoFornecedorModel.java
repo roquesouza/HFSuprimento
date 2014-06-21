@@ -1,21 +1,35 @@
 package br.com.hfsuprimento.model;
 
+import java.io.Serializable;
+import java.util.Date;
+
+import br.com.hfsuprimento.util.Utilitario;
 import br.com.topsys.util.TSUtil;
 
 @SuppressWarnings("serial")
-public class CotacaoProdutoFornecedorModel extends BaseModel {
+public class CotacaoProdutoFornecedorModel implements Serializable {
 
+	private Long id;
 	private CotacaoProdutoModel cotacaoProdutoModel;
 	private FornecedorModel fornecedorModel;
 	private Double valor;
-	private boolean flagSelecionado;
-	private Integer fornecedorSelecionado;
-
+	private Date dataAtualizacao;
+	private String observacao;
+	private FabricanteModel fabricanteModel;
+	
 	public CotacaoProdutoFornecedorModel() {
 
 	}
 
 	public CotacaoProdutoFornecedorModel(Long id) {
+		this.id = id;
+	}
+	
+	public Long getId() {
+		return TSUtil.tratarLong(id);
+	}
+
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -39,51 +53,71 @@ public class CotacaoProdutoFornecedorModel extends BaseModel {
 		this.fornecedorModel = fornecedorModel;
 	}
 
-	public Boolean getFlagSelecionado() {
-		return flagSelecionado;
-	}
-
-	public void setFlagSelecionado(Boolean flagSelecionado) {
-		this.flagSelecionado = flagSelecionado;
-	}
-
 	public Double getValor() {
-		return valor;
-	}
-
-	public Double getValorTotal() {
-
-		if (!TSUtil.isEmpty(getValor()) && !TSUtil.isEmpty(cotacaoProdutoModel.getQuantidadeLiberada())) {
-
-			return valor * cotacaoProdutoModel.getQuantidadeLiberada();
-
-		} else {
-
-			return 0D;
-
-		}
-
+		return Utilitario.tratarDouble(valor);
 	}
 
 	public void setValor(Double valor) {
 		this.valor = valor;
 	}
 
-	public Integer getFornecedorSelecionado() {
-
-		if (!TSUtil.isEmpty(this.flagSelecionado) && this.flagSelecionado) {
-
-			this.fornecedorSelecionado = 1;
-
-		} else {
-
-			this.fornecedorSelecionado = 2;
-		}
-		return fornecedorSelecionado;
+	public String getObservacao() {
+		return TSUtil.tratarString(observacao);
 	}
 
-	public void setFornecedorSelecionado(Integer fornecedorSelecionado) {
-		this.fornecedorSelecionado = fornecedorSelecionado;
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
+	}
+
+	public FabricanteModel getFabricanteModel() {
+		return fabricanteModel;
+	}
+
+	public void setFabricanteModel(FabricanteModel fabricanteModel) {
+		this.fabricanteModel = fabricanteModel;
+	}
+
+	public Date getDataAtualizacao() {
+		return dataAtualizacao;
+	}
+
+	public void setDataAtualizacao(Date dataAtualizacao) {
+		this.dataAtualizacao = dataAtualizacao;
+	}
+	
+	public Double getValorTotal(){
+		return this.valor * this.cotacaoProdutoModel.getQuantidadeSolicitada();
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((cotacaoProdutoModel == null) ? 0 : cotacaoProdutoModel.hashCode());
+		result = prime * result + ((fornecedorModel == null) ? 0 : fornecedorModel.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CotacaoProdutoFornecedorModel other = (CotacaoProdutoFornecedorModel) obj;
+		if (cotacaoProdutoModel == null) {
+			if (other.cotacaoProdutoModel != null)
+				return false;
+		} else if (!cotacaoProdutoModel.equals(other.cotacaoProdutoModel))
+			return false;
+		if (fornecedorModel == null) {
+			if (other.fornecedorModel != null)
+				return false;
+		} else if (!fornecedorModel.equals(other.fornecedorModel))
+			return false;
+		return true;
 	}
 
 }

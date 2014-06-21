@@ -1,7 +1,11 @@
 package br.com.hfsuprimento.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
+
+import br.com.hfsuprimento.util.Utilitario;
+import br.com.topsys.util.TSUtil;
 
 @SuppressWarnings("serial")
 public class CotacaoProdutoModel implements Serializable {
@@ -9,27 +13,28 @@ public class CotacaoProdutoModel implements Serializable {
 	private Long id;
 	private CotacaoModel cotacaoModel;
 	private ProdutoModel produtoModel;
-	
+	private String observacao;
 	private Double quantidadeAtual;
+	private Double quantidadeSugerida;
 	private Double quantidadeSolicitada;
-	private Double quantidadeLiberada;
 	private Boolean flagAtivo;
-	private Long aprovacao;
-		
+	private UsuarioModel usuarioLiberacaoModel;
+	private Date dataLiberacao;
+	private Boolean flagLiberada;
+	
 	private List<CotacaoProdutoFornecedorModel> cotacaoProdutoFornecedores;
 	
-	public CotacaoProdutoModel() {
-		
-	}
-	
 	public CotacaoProdutoModel(CotacaoModel cotacaoModel) {
-		
+		super();
 		this.cotacaoModel = cotacaoModel;
-		
 	}
-	
+
+	public CotacaoProdutoModel() {
+		super();
+	}
+
 	public Long getId() {
-		return id;
+		return TSUtil.tratarLong(id);
 	}
 
 	public void setId(Long id) {
@@ -69,21 +74,13 @@ public class CotacaoProdutoModel implements Serializable {
 	}
 	
 	public Double getQuantidadeSolicitada() {
-		return quantidadeSolicitada;
+		return Utilitario.tratarDouble(quantidadeSolicitada);
 	}
 	
 	public void setQuantidadeSolicitada(Double quantidadeSolicitada) {
 		this.quantidadeSolicitada = quantidadeSolicitada;
 	}
 	
-	public Double getQuantidadeLiberada() {
-		return quantidadeLiberada;
-	}
-	
-	public void setQuantidadeLiberada(Double quantidadeLiberada) {
-		this.quantidadeLiberada = quantidadeLiberada;
-	}
-
 	public List<CotacaoProdutoFornecedorModel> getCotacaoProdutoFornecedores() {
 		return cotacaoProdutoFornecedores;
 	}
@@ -92,18 +89,51 @@ public class CotacaoProdutoModel implements Serializable {
 		this.cotacaoProdutoFornecedores = cotacaoProdutoFornecedores;
 	}
 
-	public Long getAprovacao() {
-		return aprovacao;
+	public String getObservacao() {
+		return observacao;
 	}
 
-	public void setAprovacao(Long aprovacao) {
-		this.aprovacao = aprovacao;
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
+	}
+	
+	public Double getQuantidadeSugerida() {
+		return quantidadeSugerida;
+	}
+
+	public void setQuantidadeSugerida(Double quantidadeSugerida) {
+		this.quantidadeSugerida = quantidadeSugerida;
+	}
+
+	public UsuarioModel getUsuarioLiberacaoModel() {
+		return usuarioLiberacaoModel;
+	}
+
+	public void setUsuarioLiberacaoModel(UsuarioModel usuarioLiberacaoModel) {
+		this.usuarioLiberacaoModel = usuarioLiberacaoModel;
+	}
+
+	public Date getDataLiberacao() {
+		return dataLiberacao;
+	}
+
+	public void setDataLiberacao(Date dataLiberacao) {
+		this.dataLiberacao = dataLiberacao;
+	}
+
+	public Boolean getFlagLiberada() {
+		return flagLiberada;
+	}
+
+	public void setFlagLiberada(Boolean flagLiberada) {
+		this.flagLiberada = flagLiberada;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((cotacaoModel == null) ? 0 : cotacaoModel.hashCode());
 		result = prime * result + ((produtoModel == null) ? 0 : produtoModel.hashCode());
 		return result;
 	}
@@ -117,6 +147,11 @@ public class CotacaoProdutoModel implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		CotacaoProdutoModel other = (CotacaoProdutoModel) obj;
+		if (cotacaoModel == null) {
+			if (other.cotacaoModel != null)
+				return false;
+		} else if (!cotacaoModel.equals(other.cotacaoModel))
+			return false;
 		if (produtoModel == null) {
 			if (other.produtoModel != null)
 				return false;
