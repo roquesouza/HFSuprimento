@@ -1,5 +1,6 @@
 package br.com.hfsuprimento.dao;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -8,8 +9,10 @@ import br.com.hfsuprimento.model.FabricanteModel;
 import br.com.topsys.database.TSDataBaseBrokerIf;
 import br.com.topsys.database.factory.TSDataBaseBrokerFactory;
 import br.com.topsys.exception.TSApplicationException;
+import br.com.topsys.util.TSUtil;
 
-public final class CotacaoProdutoFornecedorDAO {
+@SuppressWarnings("serial")
+public final class CotacaoProdutoFornecedorDAO implements Serializable {
 
 	public CotacaoProdutoFornecedorModel obter(String hash) {
 
@@ -17,7 +20,21 @@ public final class CotacaoProdutoFornecedorDAO {
 
 		broker.setPropertySQL("cotacaoprodutofornecedordao.obter", hash);
 
-		return (CotacaoProdutoFornecedorModel) broker.getObjectBean(CotacaoProdutoFornecedorModel.class, "cotacaoProdutoModel.cotacaoModel.id", "fornecedorModel.id", "fornecedorModel.nomeFantasia");
+		CotacaoProdutoFornecedorModel model = (CotacaoProdutoFornecedorModel) broker.getObjectBean(CotacaoProdutoFornecedorModel.class, "cotacaoProdutoModel.cotacaoModel.id", "fornecedorModel.id", "fornecedorModel.nomeFantasia");
+
+		if (!TSUtil.isEmpty(model)) {
+
+			model.setGrid(this.pesquisar(model));
+
+			for (CotacaoProdutoFornecedorModel fornecedor : model.getGrid()) {
+
+				fornecedor.getCotacaoProdutoModel().getProdutoModel().setFabricantesAutorizados(this.pesquisarFabricantesAutorizados(fornecedor));
+
+			}
+
+		}
+
+		return model;
 
 	}
 

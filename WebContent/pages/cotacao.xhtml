@@ -28,16 +28,16 @@
 
 </h:head>
 
-<h:body id="bodyDashBoard">
+<h:body id="bodyDashBoard" style="#{cotacaoProdutoFornecedorFaces.cotacaoProdutoFornecedorModel != null ? 'font-size: 11px' : ''}">
 
-	<p:growl autoUpdate="true" showDetail="true" showSummary="false" />
-	
 	<h:panelGroup rendered="#{cotacaoProdutoFornecedorFaces.cotacaoProdutoFornecedorModel == null}">
 		<ui:include src="erro.html" />
 	</h:panelGroup>
 	
-	<h:form id="tabsCRUD" prependId="false" rendered="#{cotacaoProdutoFornecedorFaces.cotacaoProdutoFornecedorModel != null}" style="font-size: 11px">
+	<h:form id="tabsCRUD" prependId="false" rendered="#{cotacaoProdutoFornecedorFaces.cotacaoProdutoFornecedorModel != null}" >
 
+		<p:growl autoUpdate="true" showDetail="true" showSummary="false" />
+		
 		<p:layout fullPage="true">
 
 			<p:layoutUnit id="areaTrabalho" header="Fornecedor: #{cotacaoProdutoFornecedorFaces.cotacaoProdutoFornecedorModel.fornecedorModel.nomeFantasia}" position="center">
@@ -46,7 +46,7 @@
 
 					<p:fieldset legend="Produtos da cotação número #{cotacaoProdutoFornecedorFaces.cotacaoProdutoFornecedorModel.cotacaoProdutoModel.cotacaoModel.id}" style="width: 98%">
 
-						<p:dataTable id="gridPesquisa" value="#{cotacaoProdutoFornecedorFaces.grid}" var="linha" emptyMessage="Nenhum item encontrado">
+						<p:dataTable id="gridPesquisa" value="#{cotacaoProdutoFornecedorFaces.cotacaoProdutoFornecedorModel.grid}" var="linha" emptyMessage="Nenhum item encontrado">
 
 							<p:column styleClass="coluna30" headerText="Produto">
 								<h:outputLabel value="#{linha.cotacaoProdutoModel.produtoModel.nomePrincipal}" />
@@ -88,7 +88,7 @@
 
 						</p:dataTable>
 
-						<p:commandButton type="button" rendered="#{!empty cotacaoProdutoFornecedorFaces.grid}" id="btnSalvar" value="Gravar" icon="salvar" onclick="cdAlterar.show()" style="margin-top: 10px" />
+						<p:commandButton type="button" rendered="#{!empty cotacaoProdutoFornecedorFaces.cotacaoProdutoFornecedorModel.grid}" id="btnSalvar" value="Gravar" icon="salvar" onclick="cdAlterar.show()" style="margin-top: 10px" />
 
 					</p:fieldset>
 
