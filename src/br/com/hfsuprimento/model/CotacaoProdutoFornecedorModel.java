@@ -14,6 +14,7 @@ public class CotacaoProdutoFornecedorModel implements Serializable {
 	private CotacaoProdutoModel cotacaoProdutoModel;
 	private FornecedorModel fornecedorModel;
 	private Double valor;
+	private Double valorTotal;
 	private Date dataAtualizacao;
 	private String observacao;
 	private FabricanteModel fabricanteModel;
@@ -88,16 +89,20 @@ public class CotacaoProdutoFornecedorModel implements Serializable {
 		this.dataAtualizacao = dataAtualizacao;
 	}
 	
-	public Double getValorTotal(){
-		return this.valor * this.cotacaoProdutoModel.getQuantidadeSolicitada();
-	}
-
 	public List<CotacaoProdutoFornecedorModel> getGrid() {
 		return grid;
 	}
 
 	public void setGrid(List<CotacaoProdutoFornecedorModel> grid) {
 		this.grid = grid;
+	}
+
+	public Double getValorTotal() {
+		return valorTotal;
+	}
+
+	public void setValorTotal(Double valorTotal) {
+		this.valorTotal = valorTotal;
 	}
 
 	@Override

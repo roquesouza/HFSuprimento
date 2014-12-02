@@ -1,5 +1,7 @@
 package br.com.hfsuprimento.faces;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 
 import javax.annotation.PostConstruct;
@@ -25,9 +27,19 @@ public class CotacaoProdutoFornecedorFaces extends TSMainFaces {
 	protected void clearFields() {
 
 		FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-		
+
 		this.cotacaoProdutoFornecedorModel = new CotacaoProdutoFornecedorDAO().obter(TSFacesUtil.getRequestParameter("fid"));
 
+	}
+
+	public String calcularValorUnitario(CotacaoProdutoFornecedorModel model) {
+
+		BigDecimal valorTotal = new BigDecimal(model.getValorTotal());
+		BigDecimal quantidade = new BigDecimal(model.getCotacaoProdutoModel().getQuantidadeSolicitada());
+
+		model.setValor(valorTotal.divide(quantidade, 10, RoundingMode.HALF_UP).doubleValue());
+
+		return null;
 	}
 
 	@Override

@@ -44,7 +44,7 @@
 
 				<h:panelGrid columns="1" style="width: 100%">
 
-					<p:fieldset legend="Produtos da cotação número #{cotacaoProdutoFornecedorFaces.cotacaoProdutoFornecedorModel.cotacaoProdutoModel.cotacaoModel.id}" style="width: 98%">
+					<p:fieldset legend="PRODUTOS DA COTAÇÃO Nº #{cotacaoProdutoFornecedorFaces.cotacaoProdutoFornecedorModel.cotacaoProdutoModel.cotacaoModel.id}" style="width: 98%">
 
 						<p:dataTable id="gridPesquisa" value="#{cotacaoProdutoFornecedorFaces.cotacaoProdutoFornecedorModel.grid}" var="linha" emptyMessage="Nenhum item encontrado">
 
@@ -55,6 +55,10 @@
 							<p:column styleClass="coluna10" headerText="Unidade">
 								<h:outputLabel value="#{linha.cotacaoProdutoModel.produtoModel.unidadeMedidaModel.descricao}" />
 							</p:column>
+							
+							<p:column headerText="Detalhe" styleClass="coluna10">
+								<h:outputText value="#{linha.cotacaoProdutoModel.observacao}" />
+							</p:column>
 
 							<p:column styleClass="coluna10" headerText="Quantidade">
 								<h:outputLabel value="#{linha.cotacaoProdutoModel.quantidadeSolicitada}">
@@ -62,16 +66,16 @@
 								</h:outputLabel>
 							</p:column>
 
-							<p:column styleClass="coluna10" headerText="Valor Unitário R$">
-								<p:inputText style="width: 90%;" value="#{linha.valor}" onkeyup="return mascaraMoeda(this)">
-									<f:convertNumber type="number" pattern="###,###,##0.00" locale="pt_BR" />
-									<p:ajax global="false" event="blur" process="@this" update=":tabsCRUD:gridPesquisa" />
+							<p:column styleClass="coluna10" headerText="Valor Unitário (R$)">
+								<p:inputText id="valor" value="#{linha.valor}" disabled="true" style="width: 90%;">
+									<f:convertNumber type="number" pattern="###,###,##0.00##" locale="pt_BR" />
 								</p:inputText>
 							</p:column>
 
-							<p:column styleClass="coluna10" headerText="Valor Total R$">
-								<p:inputText style="width: 90%;" disabled="true" value="#{linha.valorTotal}">
+							<p:column styleClass="coluna10" headerText="Valor Total (R$)">
+								<p:inputText id="valorTotal" value="#{linha.valorTotal}" onkeyup="return mascaraMoeda(this)" style="width: 90%;">
 									<f:convertNumber type="number" pattern="###,###,##0.00" locale="pt_BR" />
+									<p:ajax global="false" event="blur" listener="#{cotacaoProdutoFornecedorFaces.calcularValorUnitario(linha)}" process="@this" update=":tabsCRUD:gridPesquisa:valor" />
 								</p:inputText>
 							</p:column>
 
@@ -82,7 +86,7 @@
 								</h:selectOneMenu>
 							</p:column>
 
-							<p:column headerText="Observação" styleClass="coluna25">
+							<p:column headerText="Obs." styleClass="coluna15">
 								<p:inputTextarea value="#{linha.observacao}" maxlength="995" rows="2" autoResize="false" style="width: 98%" />
 							</p:column>
 
@@ -91,6 +95,8 @@
 						<p:commandButton type="button" rendered="#{!empty cotacaoProdutoFornecedorFaces.cotacaoProdutoFornecedorModel.grid}" id="btnSalvar" value="Gravar" icon="salvar" onclick="cdAlterar.show()" style="margin-top: 10px" />
 
 					</p:fieldset>
+					
+					<h:outputText value="Atenção Fornecedor! Depois de preencher os valores, envie-nos sua cotação em papel timbrado para que possamos anexá-la ao processo." style="font-size: 16px; font-weight: bold"/>
 
 				</h:panelGrid>
 
