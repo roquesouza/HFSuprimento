@@ -1,6 +1,10 @@
+/org.eclipse.wst.common.project.facet.core.xml
+.settings
 *.class
-
-# Package Files #
-*.jar
-*.war
-*.ear
+*.classpath
+*.DS_Store
+*.org.eclipse.wst.common.project.facet.core.xml
+*.org.eclipse.wst.ws.service.policy.prefs
+build
+bin
+bin/*
