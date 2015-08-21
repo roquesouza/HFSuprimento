@@ -1,9 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="HFSuprimento">
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="HFCotacao">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
-        <property name="context-root" value="HFSuprimento"/>
-        <property name="java-output-path" value="/HFSuprimento/build/classes"/>
+        <property name="java-output-path" value="/HFCotacao/build/classes"/>
+        <property name="context-root" value="HFCotacao"/>
     </wb-module>
 </project-modules>

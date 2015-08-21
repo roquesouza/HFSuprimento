@@ -18,6 +18,9 @@ public class CotacaoProdutoFornecedorModel implements Serializable {
 	private Date dataAtualizacao;
 	private String observacao;
 	private FabricanteModel fabricanteModel;
+	private String fabricante;
+	private Long qtdCaixa;
+	private String fabricantesSugeridos;
 	
 	private List<CotacaoProdutoFornecedorModel> grid;
 	
@@ -105,6 +108,14 @@ public class CotacaoProdutoFornecedorModel implements Serializable {
 		this.valorTotal = valorTotal;
 	}
 
+	public String getFabricantesSugeridos() {
+		return fabricantesSugeridos;
+	}
+
+	public void setFabricantesSugeridos(String fabricantesSugeridos) {
+		this.fabricantesSugeridos = fabricantesSugeridos;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -134,6 +145,22 @@ public class CotacaoProdutoFornecedorModel implements Serializable {
 		} else if (!fornecedorModel.equals(other.fornecedorModel))
 			return false;
 		return true;
+	}
+
+	public String getFabricante() {
+		return fabricante;
+	}
+
+	public void setFabricante(String fabricante) {
+		this.fabricante = fabricante;
+	}
+
+	public Long getQtdCaixa() {
+		return qtdCaixa;
+	}
+
+	public void setQtdCaixa(Long qtdCaixa) {
+		this.qtdCaixa = qtdCaixa;
 	}
 
 }

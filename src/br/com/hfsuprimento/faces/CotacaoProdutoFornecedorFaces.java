@@ -41,6 +41,16 @@ public class CotacaoProdutoFornecedorFaces extends TSMainFaces {
 
 		return null;
 	}
+	
+	public String calcularValorTotal(CotacaoProdutoFornecedorModel model) {
+		
+		BigDecimal valorUnitario = new BigDecimal(model.getValor());
+		BigDecimal quantidade = new BigDecimal(model.getCotacaoProdutoModel().getQuantidadeSolicitada());
+		
+		model.setValorTotal(valorUnitario.multiply(quantidade).doubleValue());
+		
+		return null;
+	}
 
 	@Override
 	protected String update() throws TSApplicationException {
