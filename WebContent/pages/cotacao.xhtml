@@ -5,27 +5,6 @@
 <h:head>
 	<title>HFCotação - Sistema de Cotação - SM Consultoria</title>
 	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/geral.css" />
-	<script src="#{request.contextPath}/resources/js/funcoes.js" type="text/javascript" />
-	<script>
-		function MaskMonetario(v) {
-			v = v.replace(/\D/g, ""); // Remove tudo o que n�o � d�gito
-			v = v.replace(/(\d{2})$/, ",$1"); // Coloca a virgula
-			v = v.replace(/(\d+)(\d{3},\d{2})$/g, "$1.$2"); // Coloca o primeiro ponto
-			var qtdLoop = (v.length - 3) / 3;
-			var count = 0;
-			while (qtdLoop > count) {
-				count++;
-				v = v.replace(/(\d+)(\d{3}.*)/, "$1.$2"); // Coloca o resto dos pontos
-			}
-			v = v.replace(/^(0)(\d)/g, "$2"); // Coloca h�fen entre o quarto e o
-			// quinto d�gitos
-			return v;
-		}
-		function mascaraMoeda(campo) {
-			campo.value = MaskMonetario(campo.value);
-		}
-	</script>
-
 </h:head>
 
 <h:body id="bodyDashBoardErro" rendered="#{cotacaoProdutoFornecedorFaces.cotacaoProdutoFornecedorModel == null}">
@@ -46,12 +25,17 @@
 			<script type="text/javascript">
 				$(document).ready(function() {
 					$(".dinheiro").maskMoney({
-						allowZero : true,
 						allowNegative : false,
-						defaultZero : true,
-						precision : 4,
+						precision : 5,
+						defaultZero : false,
 						thousands : '.',
 						decimal : ','
+					});
+					$(".numero").maskMoney({
+						allowNegative : false,
+						precision : 0,
+						defaultZero : false,
+						thousands : '.',
 					});
 				});
 			</script>
@@ -89,21 +73,14 @@
 								<p:inputText id="fabricante" value="#{linha.fabricante}" style="width: 90%;" />
 							</p:column>
 							
-							<p:column styleClass="coluna10" headerText="Valor Total (R$)" rendered="false">
-								<p:inputText id="valorTotal" value="#{linha.valorTotal}" disabled="true" style="width: 90%;" styleClass="dinheiro">
-									<f:convertNumber type="number" pattern="###,###,##0.00" locale="pt_BR" />
-								</p:inputText>
-							</p:column>
-							
 							<p:column styleClass="coluna10" headerText="Valor Unitário (R$)">
 								<p:inputText id="valorUnitario" value="#{linha.valor}" styleClass="dinheiro" maxlength="14" style="width: 90%;">
-									<f:convertNumber type="number" pattern="###,###,##0.00##" locale="pt_BR" />
-									<p:ajax global="false" event="blur" listener="#{cotacaoProdutoFornecedorFaces.calcularValorTotal(linha)}" process="@this" update="@this" />
+									<f:convertNumber type="number" pattern="###,###,##0.00###" locale="pt_BR" />
 								</p:inputText>
 							</p:column>
 
 							<p:column headerText="Quantidade caixa" styleClass="coluna10">
-								<p:inputText id="qtdCaixa" value="#{linha.qtdCaixa}" onkeypress="return Mascara(this,Integer);" maxlength="10" style="width: 90%;" />
+								<p:inputText id="qtdCaixa" value="#{linha.qtdCaixa}" maxlength="10" styleClass="numero" style="width: 90%;" />
 							</p:column>
 
 							<p:column headerText="Observação" styleClass="coluna10">
@@ -119,8 +96,6 @@
 						<p:commandButton type="button" rendered="#{!empty cotacaoProdutoFornecedorFaces.cotacaoProdutoFornecedorModel.grid}" id="btnSalvar" value="Gravar" icon="salvar" onclick="cdAlterar.show()" style="margin-top: 10px" />
 
 					</p:fieldset>
-
-					<h:outputText rendered="false" value="Atenção Fornecedor! Depois de preencher os valores, envie-nos sua cotação em papel timbrado para que possamos anexá-la ao processo." style="font-size: 16px; font-weight: bold" />
 
 				</h:panelGrid>
 
