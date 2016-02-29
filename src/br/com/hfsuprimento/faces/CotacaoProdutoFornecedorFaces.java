@@ -22,14 +22,22 @@ public class CotacaoProdutoFornecedorFaces extends TSMainFaces {
 
 	private CotacaoProdutoFornecedorModel cotacaoProdutoFornecedorModel;
 
+	private String fid;
+
 	@Override
 	@PostConstruct
 	protected void clearFields() {
 
 		FacesContext.getCurrentInstance().getExternalContext().getSession(true);
 
-		this.cotacaoProdutoFornecedorModel = new CotacaoProdutoFornecedorDAO().obter(TSFacesUtil.getRequestParameter("fid"));
+		this.fid = TSFacesUtil.getRequestParameter("fid");
 
+		this.obterCotacao();
+	}
+
+	public String obterCotacao() {
+		this.cotacaoProdutoFornecedorModel = new CotacaoProdutoFornecedorDAO().obter(this.fid);
+		return null;
 	}
 
 	public String calcularValorUnitario(CotacaoProdutoFornecedorModel model) {
@@ -41,14 +49,14 @@ public class CotacaoProdutoFornecedorFaces extends TSMainFaces {
 
 		return null;
 	}
-	
+
 	public String calcularValorTotal(CotacaoProdutoFornecedorModel model) {
-		
+
 		BigDecimal valorUnitario = new BigDecimal(model.getValor());
 		BigDecimal quantidade = new BigDecimal(model.getCotacaoProdutoModel().getQuantidadeSolicitada());
-		
+
 		model.setValorTotal(valorUnitario.multiply(quantidade).doubleValue());
-		
+
 		return null;
 	}
 
@@ -73,6 +81,14 @@ public class CotacaoProdutoFornecedorFaces extends TSMainFaces {
 
 	public void setCotacaoProdutoFornecedorModel(CotacaoProdutoFornecedorModel cotacaoProdutoFornecedorModel) {
 		this.cotacaoProdutoFornecedorModel = cotacaoProdutoFornecedorModel;
+	}
+
+	public String getFid() {
+		return fid;
+	}
+
+	public void setFid(String fid) {
+		this.fid = fid;
 	}
 
 }

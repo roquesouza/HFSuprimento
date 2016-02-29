@@ -50,8 +50,8 @@
 				<h:panelGrid columns="1" style="width: 100%">
 
 					<p:fieldset legend="PRODUTOS DA COTAÇÃO Nº #{cotacaoProdutoFornecedorFaces.cotacaoProdutoFornecedorModel.cotacaoProdutoModel.cotacaoModel.id}" style="width: 98%">
-
-						<p:dataTable id="gridPesquisa" value="#{cotacaoProdutoFornecedorFaces.cotacaoProdutoFornecedorModel.grid}" var="linha" emptyMessage="Nenhum item encontrado">
+						
+						<p:dataTable id="gridPesquisa" value="#{cotacaoProdutoFornecedorFaces.cotacaoProdutoFornecedorModel.grid}" var="linha" emptyMessage="Nenhum item encontrado" style="margin-top: 10px">
 
 							<p:column styleClass="coluna30" headerText="Produto">
 								<h:outputLabel value="#{linha.cotacaoProdutoModel.produtoModel.nomePrincipal}" />
@@ -109,6 +109,8 @@
 			</p:confirmDialog>
 
 		</p:layout>
+		
+		<h:inputHidden value="#{cotacaoProdutoFornecedorFaces.fid}" />
 
 	</h:form>
 
