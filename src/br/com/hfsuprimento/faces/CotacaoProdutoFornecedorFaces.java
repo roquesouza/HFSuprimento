@@ -24,6 +24,8 @@ public class CotacaoProdutoFornecedorFaces extends TSMainFaces {
 
 	private String fid;
 
+	private static final String SUCCESS = "sucess";
+
 	@Override
 	@PostConstruct
 	protected void clearFields() {
@@ -31,6 +33,13 @@ public class CotacaoProdutoFornecedorFaces extends TSMainFaces {
 		FacesContext.getCurrentInstance().getExternalContext().getSession(true);
 
 		this.fid = TSFacesUtil.getRequestParameter("fid");
+
+		String success = (String) TSFacesUtil.getObjectInSession(SUCCESS);
+
+		if (success != null) {
+			super.addInfoMessage("Operação realizada com sucesso");
+			TSFacesUtil.removeObjectInSession(SUCCESS);
+		}
 
 		this.obterCotacao();
 	}
@@ -60,19 +69,26 @@ public class CotacaoProdutoFornecedorFaces extends TSMainFaces {
 		return null;
 	}
 
-	@Override
-	protected String update() throws TSApplicationException {
+	public String salvar() {
 
 		CotacaoProdutoFornecedorDAO cotacaoProdutoFornecedorDAO = new CotacaoProdutoFornecedorDAO();
 
-		for (CotacaoProdutoFornecedorModel cotacaoProdutoFornecedorModel : this.cotacaoProdutoFornecedorModel.getGrid()) {
+		try {
 
-			cotacaoProdutoFornecedorModel.setDataAtualizacao(new Date());
-			cotacaoProdutoFornecedorDAO.alterar(cotacaoProdutoFornecedorModel);
+			for (CotacaoProdutoFornecedorModel cotacaoProdutoFornecedorModel : this.cotacaoProdutoFornecedorModel.getGrid()) {
 
+				cotacaoProdutoFornecedorModel.setDataAtualizacao(new Date());
+				cotacaoProdutoFornecedorDAO.alterar(cotacaoProdutoFornecedorModel);
+
+			}
+
+		} catch (TSApplicationException e) {
+			super.throwException(e);
 		}
 
-		return null;
+		TSFacesUtil.addObjectInSession(SUCCESS, "ok");
+
+		return "/pages/cotacao.xhtml?faces-redirect=true&fid=" + this.fid;
 	}
 
 	public CotacaoProdutoFornecedorModel getCotacaoProdutoFornecedorModel() {

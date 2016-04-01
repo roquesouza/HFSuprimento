@@ -104,7 +104,7 @@
 			</p:layoutUnit>
 
 			<p:confirmDialog message="Confirma gravação da cotação?" header="Aviso" severity="alert" widgetVar="cdAlterar" modal="true">
-				<p:commandButton ajax="false" global="true" value="Sim" onclick="cdAlterar.hide()" action="#{cotacaoProdutoFornecedorFaces.updateEvent}" />
+				<p:commandButton ajax="false" global="true" value="Sim" onclick="cdAlterar.hide()" action="#{cotacaoProdutoFornecedorFaces.salvar}" />
 				<p:commandButton value="Nao" onclick="cdAlterar.hide()" />
 			</p:confirmDialog>
 
