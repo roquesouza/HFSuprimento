@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <f:view xmlns:f="http://java.sun.com/jsf/core" contentType="text/html" encoding='UTF-8'>
-	<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets">
+	<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:pe="http://primefaces.org/ui/extensions">
 
 <h:head>
 	<title>HFCotação - Sistema de Cotação - SM Consultoria</title>
@@ -72,17 +72,15 @@
 							</p:column>
 
 							<p:column headerText="Fabricante" styleClass="coluna15">
-								<p:inputText id="fabricante" value="#{linha.fabricante}" style="width: 90%;" />
+								<p:inputText id="fabricante" value="#{linha.fabricante}" maxlength="100" style="width: 90%;" />
 							</p:column>
 							
 							<p:column styleClass="coluna10" headerText="Valor Unitário (R$)">
-								<p:inputText id="valorUnitario" value="#{linha.valor}" styleClass="dinheiro" maxlength="14" style="width: 90%;">
-									<f:convertNumber type="number" pattern="###,###,##0.00###" locale="pt_BR" />
-								</p:inputText>
+								<pe:inputNumber id="valorUnitario" value="#{linha.valor}" maxlength="6" maxValue="99999999.99999" decimalPlaces="5" decimalSeparator="," thousandSeparator="." style="width: 87%; text-align:right" />
 							</p:column>
 
 							<p:column headerText="Quantidade caixa" styleClass="coluna10">
-								<p:inputText id="qtdCaixa" value="#{linha.qtdCaixa}" maxlength="10" styleClass="numero" style="width: 90%;" />
+								<pe:inputNumber id="qtdCaixa" value="#{linha.qtdCaixa}" maxlength="5" maxValue="99999" decimalPlaces="0" style="width: 90%; text-align:right" />
 							</p:column>
 
 							<p:column headerText="Observação" styleClass="coluna10">
