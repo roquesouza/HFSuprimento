@@ -12,6 +12,7 @@ import javax.faces.context.FacesContext;
 import br.com.hfsuprimento.dao.CotacaoProdutoFornecedorDAO;
 import br.com.hfsuprimento.model.CotacaoProdutoFornecedorModel;
 import br.com.topsys.exception.TSApplicationException;
+import br.com.topsys.exception.TSSystemException;
 import br.com.topsys.web.faces.TSMainFaces;
 import br.com.topsys.web.util.TSFacesUtil;
 
@@ -25,6 +26,7 @@ public class CotacaoProdutoFornecedorFaces extends TSMainFaces {
 	private String fid;
 
 	private static final String SUCCESS = "sucess";
+	private static final String ERROR = "error";
 
 	@Override
 	@PostConstruct
@@ -35,9 +37,15 @@ public class CotacaoProdutoFornecedorFaces extends TSMainFaces {
 		this.fid = TSFacesUtil.getRequestParameter("fid");
 
 		String success = (String) TSFacesUtil.getObjectInSession(SUCCESS);
+		String error = (String) TSFacesUtil.getObjectInSession(ERROR);
 
 		if (success != null) {
-			super.addInfoMessage("Operação realizada com sucesso");
+			super.addInfoMessage(success);
+			TSFacesUtil.removeObjectInSession(SUCCESS);
+		}
+		
+		if (error != null) {
+			super.addErrorMessage(error);
 			TSFacesUtil.removeObjectInSession(SUCCESS);
 		}
 
@@ -81,12 +89,19 @@ public class CotacaoProdutoFornecedorFaces extends TSMainFaces {
 				cotacaoProdutoFornecedorDAO.alterar(cotacaoProdutoFornecedorModel);
 
 			}
+			
+			TSFacesUtil.addObjectInSession(SUCCESS, "Operação realizada com sucesso");
 
 		} catch (TSApplicationException e) {
+			
 			super.throwException(e);
+			
+		} catch (TSSystemException e){
+			
+			TSFacesUtil.addObjectInSession(ERROR, "Ocorreu um erro ao salvar a cotação");
+			e.printStackTrace();
+			
 		}
-
-		TSFacesUtil.addObjectInSession(SUCCESS, "ok");
 
 		return "/pages/cotacao.xhtml?faces-redirect=true&fid=" + this.fid;
 	}
