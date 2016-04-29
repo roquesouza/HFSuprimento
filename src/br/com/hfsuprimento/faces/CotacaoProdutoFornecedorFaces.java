@@ -1,7 +1,5 @@
 package br.com.hfsuprimento.faces;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.Date;
 
 import javax.annotation.PostConstruct;
@@ -22,6 +20,8 @@ import br.com.topsys.web.util.TSFacesUtil;
 public class CotacaoProdutoFornecedorFaces extends TSMainFaces {
 
 	private CotacaoProdutoFornecedorModel cotacaoProdutoFornecedorModel;
+	
+	private CotacaoProdutoFornecedorDAO cotacaoProdutoFornecedorDAO;
 
 	private String fid;
 
@@ -31,6 +31,8 @@ public class CotacaoProdutoFornecedorFaces extends TSMainFaces {
 	@Override
 	@PostConstruct
 	protected void clearFields() {
+		
+		this.cotacaoProdutoFornecedorDAO = new CotacaoProdutoFornecedorDAO();
 
 		FacesContext.getCurrentInstance().getExternalContext().getSession(true);
 
@@ -46,47 +48,51 @@ public class CotacaoProdutoFornecedorFaces extends TSMainFaces {
 		
 		if (error != null) {
 			super.addErrorMessage(error);
-			TSFacesUtil.removeObjectInSession(SUCCESS);
+			TSFacesUtil.removeObjectInSession(ERROR);
 		}
 
 		this.obterCotacao();
 	}
 
 	public String obterCotacao() {
-		this.cotacaoProdutoFornecedorModel = new CotacaoProdutoFornecedorDAO().obter(this.fid);
+		this.cotacaoProdutoFornecedorModel = this.cotacaoProdutoFornecedorDAO.obter(this.fid);
 		return null;
 	}
 
-	public String calcularValorUnitario(CotacaoProdutoFornecedorModel model) {
+	public String salvarIndividual(CotacaoProdutoFornecedorModel cotacaoProdutoFornecedorModel) {
+		
+		try {
 
-		BigDecimal valorTotal = new BigDecimal(model.getValorTotal());
-		BigDecimal quantidade = new BigDecimal(model.getCotacaoProdutoModel().getQuantidadeSolicitada());
+			cotacaoProdutoFornecedorModel.setDataAtualizacao(new Date());
+			
+			this.cotacaoProdutoFornecedorDAO.alterar(cotacaoProdutoFornecedorModel);
 
-		model.setValor(valorTotal.divide(quantidade, 10, RoundingMode.HALF_UP).doubleValue());
+			super.addInfoMessage("Operação realizada com sucesso");
+
+		} catch (TSApplicationException e) {
+			
+			super.throwException(e);
+			
+		} catch (TSSystemException e){
+			
+			super.addErrorMessage("Ocorreu um erro ao salvar a cotação");
+			e.printStackTrace();
+			
+		}
 
 		return null;
+		
 	}
-
-	public String calcularValorTotal(CotacaoProdutoFornecedorModel model) {
-
-		BigDecimal valorUnitario = new BigDecimal(model.getValor());
-		BigDecimal quantidade = new BigDecimal(model.getCotacaoProdutoModel().getQuantidadeSolicitada());
-
-		model.setValorTotal(valorUnitario.multiply(quantidade).doubleValue());
-
-		return null;
-	}
-
+	
 	public String salvar() {
-
-		CotacaoProdutoFornecedorDAO cotacaoProdutoFornecedorDAO = new CotacaoProdutoFornecedorDAO();
 
 		try {
 
 			for (CotacaoProdutoFornecedorModel cotacaoProdutoFornecedorModel : this.cotacaoProdutoFornecedorModel.getGrid()) {
 
 				cotacaoProdutoFornecedorModel.setDataAtualizacao(new Date());
-				cotacaoProdutoFornecedorDAO.alterar(cotacaoProdutoFornecedorModel);
+				
+				this.cotacaoProdutoFornecedorDAO.alterar(cotacaoProdutoFornecedorModel);
 
 			}
 			

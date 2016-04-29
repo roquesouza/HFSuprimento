@@ -88,7 +88,11 @@
 							</p:column>
 
 							<p:column headerText="Observação" styleClass="coluna15">
-								<p:inputTextarea value="#{linha.observacao}" maxlength="995" rows="3" autoResize="false" style="width: 98%" />
+								<p:inputTextarea id="observacao" value="#{linha.observacao}" maxlength="995" rows="3" autoResize="false" style="width: 98%" />
+							</p:column>
+
+							<p:column headerText="" styleClass="coluna05">
+								<p:commandButton icon="salvar" title="Clique para salvar o valor deste item" action="#{cotacaoProdutoFornecedorFaces.salvarIndividual(linha)}" process="@this, :tabsCRUD:gridPesquisa:fabricante, :tabsCRUD:gridPesquisa:valorUnitario, :tabsCRUD:gridPesquisa:qtdCaixa, :tabsCRUD:gridPesquisa:observacao" />
 							</p:column>
 
 						</p:dataTable>
@@ -109,6 +113,7 @@
 		</p:layout>
 		
 		<h:inputHidden value="#{cotacaoProdutoFornecedorFaces.fid}" />
+		<p:poll interval="600" process="@this" widgetVar="poll" autoStart="true" />
 
 	</h:form>
 
