@@ -51,53 +51,62 @@
 
 					<p:fieldset legend="PRODUTOS DA COTAÇÃO Nº #{cotacaoProdutoFornecedorFaces.cotacaoProdutoFornecedorModel.cotacaoProdutoModel.cotacaoModel.id}" style="width: 98%">
 						
-						<p:dataTable id="gridPesquisa" value="#{cotacaoProdutoFornecedorFaces.cotacaoProdutoFornecedorModel.grid}" var="linha" emptyMessage="Nenhum item encontrado" style="margin-top: 10px">
+						<p:scrollPanel id="spCotacao" mode="native" style="background: none; padding: 5px; overflow: auto !important;">
 
-							<p:column styleClass="coluna30" headerText="Produto">
-								<h:outputLabel value="#{linha.cotacaoProdutoModel.produtoModel.nomePrincipal}" />
-							</p:column>
+							<p:dataTable id="gridPesquisa" value="#{cotacaoProdutoFornecedorFaces.cotacaoProdutoFornecedorModel.grid}" var="linha" emptyMessage="Nenhum item encontrado" rowIndexVar="index" style="margin-top: 10px">
 
-							<p:column styleClass="coluna7" headerText="Unidade">
-								<h:outputLabel value="#{linha.cotacaoProdutoModel.produtoModel.unidadeMedidaModel.descricao}" />
-							</p:column>
-
-							<p:column styleClass="coluna7" headerText="Quantidade">
-								<h:outputLabel value="#{linha.cotacaoProdutoModel.quantidadeSolicitada}">
-									<f:convertNumber type="number" pattern="#,###,##0.##" locale="pt_BR" />
-								</h:outputLabel>
-							</p:column>
-
-							<p:column headerText="Fabricantes Sugeridos" styleClass="coluna15">
-								<h:outputLabel value="#{linha.fabricantesSugeridos}" />
-							</p:column>
-
-							<p:column headerText="Fabricante" styleClass="coluna15">
-								<p:inputText id="fabricante" value="#{linha.fabricante}" maxlength="100" style="width: 90%;" />
-							</p:column>
+								<p:column styleClass="coluna30" headerText="Produto">
+									<a name="item${index}" />
+									<h:outputLabel value="#{linha.cotacaoProdutoModel.produtoModel.nomePrincipal}" />
+								</p:column>
+	
+								<p:column styleClass="coluna7" headerText="Unidade">
+									<h:outputLabel value="#{linha.cotacaoProdutoModel.produtoModel.unidadeMedidaModel.descricao}" />
+								</p:column>
+	
+								<p:column styleClass="coluna7" headerText="Quantidade">
+									<h:outputLabel value="#{linha.cotacaoProdutoModel.quantidadeSolicitada}">
+										<f:convertNumber type="number" pattern="#,###,##0.##" locale="pt_BR" />
+									</h:outputLabel>
+								</p:column>
+	
+								<p:column headerText="Fabricantes Sugeridos" styleClass="coluna15">
+									<h:outputLabel value="#{linha.fabricantesSugeridos}" />
+								</p:column>
+	
+								<p:column headerText="Fabricante" styleClass="coluna15">
+									<p:inputText id="fabricante" value="#{linha.fabricante}" maxlength="100" onblur="document.getElementById('ancora').value = 'item${index}'" style="width: 90%;" />
+								</p:column>
+								
+								<p:column styleClass="coluna10" headerText="Valor Unitário (R$)">
+									<pe:inputNumber id="valorUnitario" value="#{linha.valor}" maxlength="6" maxValue="99999999.99999" onblur="document.getElementById('ancora').value = 'item${index}'" decimalPlaces="5" decimalSeparator="," thousandSeparator="." style="width: 87%; text-align:right" />
+								</p:column>
+	
+								<p:column headerText="Quantidade caixa" styleClass="coluna10">
+									<pe:inputNumber id="qtdCaixa" value="#{linha.qtdCaixa}" maxlength="5" maxValue="99999" onblur="document.getElementById('ancora').value = 'item${index}'" decimalPlaces="0" style="width: 90%; text-align:right" />
+								</p:column>
+	
+								<p:column headerText="Observação" styleClass="coluna10">
+									<h:outputText value="#{linha.cotacaoProdutoModel.observacao}" />
+								</p:column>
+	
+								<p:column headerText="Observação" styleClass="coluna15">
+									<p:inputTextarea id="observacao" value="#{linha.observacao}" maxlength="995" onblur="document.getElementById('ancora').value = 'item${index}'" rows="3" autoResize="false" style="width: 98%" />
+								</p:column>
 							
-							<p:column styleClass="coluna10" headerText="Valor Unitário (R$)">
-								<pe:inputNumber id="valorUnitario" value="#{linha.valor}" maxlength="6" maxValue="99999999.99999" decimalPlaces="5" decimalSeparator="," thousandSeparator="." style="width: 87%; text-align:right" />
-							</p:column>
-
-							<p:column headerText="Quantidade caixa" styleClass="coluna10">
-								<pe:inputNumber id="qtdCaixa" value="#{linha.qtdCaixa}" maxlength="5" maxValue="99999" decimalPlaces="0" style="width: 90%; text-align:right" />
-							</p:column>
-
-							<p:column headerText="Observação" styleClass="coluna10">
-								<h:outputText value="#{linha.cotacaoProdutoModel.observacao}" />
-							</p:column>
-
-							<p:column headerText="Observação" styleClass="coluna15">
-								<p:inputTextarea id="observacao" value="#{linha.observacao}" maxlength="995" rows="3" autoResize="false" style="width: 98%" />
-							</p:column>
-
-							<p:column headerText="" styleClass="coluna05">
-								<p:commandButton icon="salvar" title="Clique para salvar o valor deste item" action="#{cotacaoProdutoFornecedorFaces.salvarIndividual(linha)}" process="@this, :tabsCRUD:gridPesquisa:fabricante, :tabsCRUD:gridPesquisa:valorUnitario, :tabsCRUD:gridPesquisa:qtdCaixa, :tabsCRUD:gridPesquisa:observacao" />
-							</p:column>
-
-						</p:dataTable>
-
-						<p:commandButton type="button" rendered="#{!empty cotacaoProdutoFornecedorFaces.cotacaoProdutoFornecedorModel.grid}" id="btnSalvar" value="Gravar" icon="salvar" onclick="cdAlterar.show()" style="margin-top: 10px" />
+							</p:dataTable>
+			
+							<script type="text/javascript">
+								$(document).ready(function() {
+									$("div[id*=spCotacao]").height($(window).height() - 180);
+								});
+							</script>
+			
+						</p:scrollPanel>
+						
+						<p:panel style="margin-top: 5px">
+							<p:commandButton type="button" rendered="#{!empty cotacaoProdutoFornecedorFaces.cotacaoProdutoFornecedorModel.grid}" id="btnSalvar" value="Gravar" icon="salvar" onclick="cdAlterar.show()" style="margin-top: 10px" />
+						</p:panel>
 
 					</p:fieldset>
 
@@ -106,11 +115,13 @@
 			</p:layoutUnit>
 
 			<p:confirmDialog message="Confirma gravação da cotação?" header="Aviso" severity="alert" widgetVar="cdAlterar" modal="true">
-				<p:commandButton ajax="false" global="true" value="Sim" onclick="cdAlterar.hide()" action="#{cotacaoProdutoFornecedorFaces.salvar}" />
+				<p:commandButton value="Sim" oncomplete="cdAlterar.hide()" action="#{cotacaoProdutoFornecedorFaces.salvar}" process="@form" />
 				<p:commandButton value="Nao" onclick="cdAlterar.hide()" />
 			</p:confirmDialog>
 
 		</p:layout>
+		
+		<input type="hidden" id="ancora" name="ancora" value="" />
 		
 		<h:inputHidden value="#{cotacaoProdutoFornecedorFaces.fid}" />
 		<p:poll interval="600" process="@this" widgetVar="poll" autoStart="true" />

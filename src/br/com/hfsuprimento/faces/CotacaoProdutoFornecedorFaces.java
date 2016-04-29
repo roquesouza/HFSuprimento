@@ -96,7 +96,8 @@ public class CotacaoProdutoFornecedorFaces extends TSMainFaces {
 
 			}
 			
-			TSFacesUtil.addObjectInSession(SUCCESS, "Operação realizada com sucesso");
+			super.addInfoMessage("Operação realizada com sucesso");
+			//TSFacesUtil.addObjectInSession(SUCCESS, "Operação realizada com sucesso");
 
 		} catch (TSApplicationException e) {
 			
@@ -104,12 +105,14 @@ public class CotacaoProdutoFornecedorFaces extends TSMainFaces {
 			
 		} catch (TSSystemException e){
 			
-			TSFacesUtil.addObjectInSession(ERROR, "Ocorreu um erro ao salvar a cotação");
+			super.addInfoMessage("Ocorreu um erro ao salvar a cotação");
+			//TSFacesUtil.addObjectInSession(ERROR, "Ocorreu um erro ao salvar a cotação");
 			e.printStackTrace();
 			
 		}
 
-		return "/pages/cotacao.xhtml?faces-redirect=true&fid=" + this.fid;
+		//return "/pages/cotacao.xhtml?faces-redirect=true&fid=" + this.fid;
+		return null;
 	}
 
 	public CotacaoProdutoFornecedorModel getCotacaoProdutoFornecedorModel() {
