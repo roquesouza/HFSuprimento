@@ -21,28 +21,6 @@
 
 		<p:growl autoUpdate="true" showDetail="true" showSummary="false" />
 		
-		<p:outputPanel autoUpdate="true">
-			<script type="text/javascript">
-				$(document).ready(function() {
-					$(".dinheiro").maskMoney({
-						allowNegative : false,
-						allowZero : false,
-						precision : 5,
-						defaultZero : false,
-						thousands : '.',
-						decimal : ','
-					});
-					$(".numero").maskMoney({
-						allowNegative : false,
-						allowZero : false,
-						precision : 0,
-						defaultZero : false,
-						thousands : '.',
-					});
-				});
-			</script>
-		</p:outputPanel>
-
 		<p:layout fullPage="true">
 
 			<p:layoutUnit id="areaTrabalho" header="Fornecedor: #{cotacaoProdutoFornecedorFaces.cotacaoProdutoFornecedorModel.fornecedorModel.nomeFantasia}" position="center">
@@ -56,7 +34,6 @@
 							<p:dataTable id="gridPesquisa" value="#{cotacaoProdutoFornecedorFaces.cotacaoProdutoFornecedorModel.grid}" var="linha" emptyMessage="Nenhum item encontrado" rowIndexVar="index" style="margin-top: 10px">
 
 								<p:column styleClass="coluna30" headerText="Produto">
-									<a name="item${index}" />
 									<h:outputLabel value="#{linha.cotacaoProdutoModel.produtoModel.nomePrincipal}" />
 								</p:column>
 	
@@ -75,15 +52,15 @@
 								</p:column>
 	
 								<p:column headerText="Fabricante" styleClass="coluna15">
-									<p:inputText id="fabricante" value="#{linha.fabricante}" maxlength="100" onblur="document.getElementById('ancora').value = 'item${index}'" style="width: 90%;" />
+									<p:inputText id="fabricante" value="#{linha.fabricante}" maxlength="100" style="width: 90%;" />
 								</p:column>
 								
 								<p:column styleClass="coluna10" headerText="Valor Unitário (R$)">
-									<pe:inputNumber id="valorUnitario" value="#{linha.valor}" maxlength="6" maxValue="99999999.99999" onblur="document.getElementById('ancora').value = 'item${index}'" decimalPlaces="5" decimalSeparator="," thousandSeparator="." style="width: 87%; text-align:right" />
+									<pe:inputNumber id="valorUnitario" value="#{linha.valor}" maxlength="6" maxValue="99999999.99999" decimalPlaces="5" decimalSeparator="," thousandSeparator="." style="width: 87%; text-align:right" />
 								</p:column>
 	
 								<p:column headerText="Quantidade caixa" styleClass="coluna10">
-									<pe:inputNumber id="qtdCaixa" value="#{linha.qtdCaixa}" maxlength="5" maxValue="99999" onblur="document.getElementById('ancora').value = 'item${index}'" decimalPlaces="0" style="width: 90%; text-align:right" />
+									<pe:inputNumber id="qtdCaixa" value="#{linha.qtdCaixa}" maxlength="5" maxValue="99999" decimalPlaces="0" style="width: 90%; text-align:right" />
 								</p:column>
 	
 								<p:column headerText="Observação" styleClass="coluna10">
@@ -91,7 +68,7 @@
 								</p:column>
 	
 								<p:column headerText="Observação" styleClass="coluna15">
-									<p:inputTextarea id="observacao" value="#{linha.observacao}" maxlength="995" onblur="document.getElementById('ancora').value = 'item${index}'" rows="3" autoResize="false" style="width: 98%" />
+									<p:inputTextarea id="observacao" value="#{linha.observacao}" maxlength="995" rows="3" autoResize="false" style="width: 98%" />
 								</p:column>
 							
 							</p:dataTable>
@@ -121,9 +98,6 @@
 
 		</p:layout>
 		
-		<input type="hidden" id="ancora" name="ancora" value="" />
-		
-		<h:inputHidden value="#{cotacaoProdutoFornecedorFaces.fid}" />
 		<p:poll interval="600" process="@this" widgetVar="poll" autoStart="true" />
 
 	</h:form>
