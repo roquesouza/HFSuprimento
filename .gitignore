@@ -5,6 +5,7 @@
 *.DS_Store
 *.org.eclipse.wst.common.project.facet.core.xml
 *.org.eclipse.wst.ws.service.policy.prefs
+*.gitignore
 build
 bin
 bin/*

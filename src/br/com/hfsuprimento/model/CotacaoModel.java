@@ -20,6 +20,9 @@ public class CotacaoModel implements Serializable {
 	private Date dataValidade;
 	private Date dataInicial;
 	private Date dataFinal;
+	private String condicaoPagamento;
+	private String frete;
+	private String prazoEntrega;
 
 	private List<CotacaoProdutoModel> cotacaoProdutos;
 
@@ -126,6 +129,30 @@ public class CotacaoModel implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getCondicaoPagamento() {
+		return condicaoPagamento;
+	}
+
+	public void setCondicaoPagamento(String condicaoPagamento) {
+		this.condicaoPagamento = condicaoPagamento;
+	}
+
+	public String getFrete() {
+		return frete;
+	}
+
+	public void setFrete(String frete) {
+		this.frete = frete;
+	}
+
+	public String getPrazoEntrega() {
+		return prazoEntrega;
+	}
+
+	public void setPrazoEntrega(String prazoEntrega) {
+		this.prazoEntrega = prazoEntrega;
 	}
 
 	@Override

@@ -27,7 +27,19 @@
 
 				<h:panelGrid columns="1" style="width: 100%">
 
-					<p:fieldset legend="PRODUTOS DA COTAÇÃO Nº #{cotacaoProdutoFornecedorFaces.cotacaoProdutoFornecedorModel.cotacaoProdutoModel.cotacaoModel.id}" style="width: 98%">
+					<p:fieldset legend="PRODUTOS DA COTAÇÃO Nº #{cotacaoProdutoFornecedorFaces.cotacaoProdutoFornecedorModel.cotacaoProdutoModel.cotacaoModel.id}">
+						
+						<h:panelGrid columns="3" columnClasses="coluna45, coluna40, coluna15" style="width: 100%">
+						
+							<p:outputLabel for="condicaoPagamento" value="Condição de Pagamento" />
+							<p:outputLabel for="prazoEntrega" value="Prazo de entrega" />
+							<p:outputLabel for="frete" value="Frete" />
+							
+							<h:outputLabel id="condicaoPagamento" value="#{cotacaoProdutoFornecedorFaces.cotacaoProdutoFornecedorModel.cotacaoProdutoModel.cotacaoModel.condicaoPagamento}" style="color: #CD5C5C; font-weight: bold; font-size: 16px"/>
+							<h:outputLabel id="prazoEntrega" value="#{cotacaoProdutoFornecedorFaces.cotacaoProdutoFornecedorModel.cotacaoProdutoModel.cotacaoModel.prazoEntrega}" style="color: #CD5C5C; font-weight: bold; font-size: 16px" />
+							<h:outputLabel id="frete" value="#{cotacaoProdutoFornecedorFaces.cotacaoProdutoFornecedorModel.cotacaoProdutoModel.cotacaoModel.frete}" style="color: #CD5C5C; font-weight: bold; font-size: 16px" />
+							
+						</h:panelGrid>
 						
 						<p:scrollPanel id="spCotacao" mode="native" style="background: none; padding: 5px; overflow: auto !important;">
 
@@ -75,7 +87,7 @@
 			
 							<script type="text/javascript">
 								$(document).ready(function() {
-									$("div[id*=spCotacao]").height($(window).height() - 180);
+									$("div[id*=spCotacao]").height($(window).height() - 220);
 								});
 							</script>
 			

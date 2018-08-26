@@ -18,9 +18,9 @@ public final class CotacaoProdutoFornecedorDAO implements Serializable {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
 
-		broker.setSQL("SELECT DISTINCT CF.COTACAO_ID, F.ID, F.NOME_FANTASIA FROM FORNECEDOR F, COTACAO_FORNECEDOR CF, COTACAO C WHERE F.ID = CF.FORNECEDOR_ID AND C.ID = CF.COTACAO_ID AND C.STATUS_COTACAO_ID = 2 AND C.DATA_VALIDADE >= CURRENT_DATE AND MD5(CF.ID::TEXT) = ?", hash);
+		broker.setSQL("SELECT DISTINCT CF.COTACAO_ID, C.CONDICAO_PAGAMENTO, C.FRETE, C.PRAZO_ENTREGA, F.ID, F.NOME_FANTASIA FROM FORNECEDOR F, COTACAO_FORNECEDOR CF, COTACAO C WHERE F.ID = CF.FORNECEDOR_ID AND C.ID = CF.COTACAO_ID AND C.STATUS_COTACAO_ID = 2 AND C.DATA_VALIDADE >= CURRENT_DATE AND MD5(CF.ID::TEXT) = ?", hash);
 
-		CotacaoProdutoFornecedorModel model = (CotacaoProdutoFornecedorModel) broker.getObjectBean(CotacaoProdutoFornecedorModel.class, "cotacaoProdutoModel.cotacaoModel.id", "fornecedorModel.id", "fornecedorModel.nomeFantasia");
+		CotacaoProdutoFornecedorModel model = (CotacaoProdutoFornecedorModel) broker.getObjectBean(CotacaoProdutoFornecedorModel.class, "cotacaoProdutoModel.cotacaoModel.id", "cotacaoProdutoModel.cotacaoModel.condicaoPagamento", "cotacaoProdutoModel.cotacaoModel.frete", "cotacaoProdutoModel.cotacaoModel.prazoEntrega", "fornecedorModel.id", "fornecedorModel.nomeFantasia");
 
 		if (!TSUtil.isEmpty(model)) {
 
