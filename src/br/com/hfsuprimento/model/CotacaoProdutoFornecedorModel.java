@@ -2,7 +2,6 @@ package br.com.hfsuprimento.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 import br.com.hfsuprimento.util.Utilitario;
 import br.com.topsys.util.TSUtil;
@@ -21,8 +20,6 @@ public class CotacaoProdutoFornecedorModel implements Serializable {
 	private String fabricante;
 	private Long qtdCaixa;
 	private String fabricantesSugeridos;
-	
-	private List<CotacaoProdutoFornecedorModel> grid;
 	
 	public CotacaoProdutoFornecedorModel() {
 
@@ -92,14 +89,6 @@ public class CotacaoProdutoFornecedorModel implements Serializable {
 		this.dataAtualizacao = dataAtualizacao;
 	}
 	
-	public List<CotacaoProdutoFornecedorModel> getGrid() {
-		return grid;
-	}
-
-	public void setGrid(List<CotacaoProdutoFornecedorModel> grid) {
-		this.grid = grid;
-	}
-
 	public Double getValorTotal() {
 		return valorTotal;
 	}

@@ -1,3 +1,3 @@
 <Context docBase="HFSuprimento" path="/HFSuprimento" reloadable="true" source="org.eclipse.jst.jee.server:HFSuprimento">
-	<Resource auth="Container" driverClassName="org.postgresql.Driver" maxActive="20" maxIdle="10" maxWait="-1" name="jdbc/HosFlowDS" password="AdminHosFlow2010" type="javax.sql.DataSource" url="jdbc:postgresql://localhost:5432/hosflow_hmv" username="hosflow" validationQuery="select version();"/>
+	<Resource auth="Container" driverClassName="org.postgresql.Driver" maxActive="20" maxIdle="10" maxWait="-1" name="jdbc/HosFlowDS" password="15rt01" type="javax.sql.DataSource" url="jdbc:postgresql://localhost:5432/smpep_hcm2" username="postgres" validationQuery="select version();"/>
 </Context>

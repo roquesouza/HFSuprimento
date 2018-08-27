@@ -8,6 +8,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import br.com.hfsuprimento.dao.CotacaoProdutoFornecedorDAO;
+import br.com.hfsuprimento.model.CotacaoFornecedorModel;
 import br.com.hfsuprimento.model.CotacaoProdutoFornecedorModel;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.exception.TSSystemException;
@@ -19,7 +20,7 @@ import br.com.topsys.web.util.TSFacesUtil;
 @ManagedBean(name = "cotacaoProdutoFornecedorFaces")
 public class CotacaoProdutoFornecedorFaces extends TSMainFaces {
 
-	private CotacaoProdutoFornecedorModel cotacaoProdutoFornecedorModel;
+	private CotacaoFornecedorModel cotacaoFornecedorModel;
 	
 	private CotacaoProdutoFornecedorDAO cotacaoProdutoFornecedorDAO;
 
@@ -55,7 +56,7 @@ public class CotacaoProdutoFornecedorFaces extends TSMainFaces {
 	}
 
 	public String obterCotacao() {
-		this.cotacaoProdutoFornecedorModel = this.cotacaoProdutoFornecedorDAO.obter(this.fid);
+		this.cotacaoFornecedorModel = this.cotacaoProdutoFornecedorDAO.obter(this.fid);
 		return null;
 	}
 
@@ -86,9 +87,13 @@ public class CotacaoProdutoFornecedorFaces extends TSMainFaces {
 	
 	public String salvar() {
 
+		this.cotacaoFornecedorModel.setDataAtualizacao(new Date());
+		
 		try {
+			
+			this.cotacaoProdutoFornecedorDAO.alterar(this.cotacaoFornecedorModel);
 
-			for (CotacaoProdutoFornecedorModel cotacaoProdutoFornecedorModel : this.cotacaoProdutoFornecedorModel.getGrid()) {
+			for (CotacaoProdutoFornecedorModel cotacaoProdutoFornecedorModel : this.cotacaoFornecedorModel.getGrid()) {
 
 				cotacaoProdutoFornecedorModel.setDataAtualizacao(new Date());
 				
@@ -115,12 +120,12 @@ public class CotacaoProdutoFornecedorFaces extends TSMainFaces {
 		return null;
 	}
 
-	public CotacaoProdutoFornecedorModel getCotacaoProdutoFornecedorModel() {
-		return cotacaoProdutoFornecedorModel;
+	public CotacaoFornecedorModel getCotacaoFornecedorModel() {
+		return cotacaoFornecedorModel;
 	}
 
-	public void setCotacaoProdutoFornecedorModel(CotacaoProdutoFornecedorModel cotacaoProdutoFornecedorModel) {
-		this.cotacaoProdutoFornecedorModel = cotacaoProdutoFornecedorModel;
+	public void setCotacaoFornecedorModel(CotacaoFornecedorModel cotacaoFornecedorModel) {
+		this.cotacaoFornecedorModel = cotacaoFornecedorModel;
 	}
 
 	public String getFid() {

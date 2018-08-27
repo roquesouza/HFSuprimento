@@ -7,13 +7,13 @@
 	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/geral.css" />
 </h:head>
 
-<h:body id="bodyDashBoardErro" rendered="#{cotacaoProdutoFornecedorFaces.cotacaoProdutoFornecedorModel == null}">
+<h:body id="bodyDashBoardErro" rendered="#{cotacaoProdutoFornecedorFaces.cotacaoFornecedorModel == null}">
 
 	<ui:include src="erro.html" />
 
 </h:body>
 
-<h:body id="bodyDashBoard" style="font-size: 11px" rendered="#{cotacaoProdutoFornecedorFaces.cotacaoProdutoFornecedorModel != null}">
+<h:body id="bodyDashBoard" style="font-size: 11px" rendered="#{cotacaoProdutoFornecedorFaces.cotacaoFornecedorModel != null}">
 	
 	<script src="#{request.contextPath}/resources/js/jquery.maskMoney.js" type="text/javascript" />
 	
@@ -23,27 +23,30 @@
 		
 		<p:layout fullPage="true">
 
-			<p:layoutUnit id="areaTrabalho" header="Fornecedor: #{cotacaoProdutoFornecedorFaces.cotacaoProdutoFornecedorModel.fornecedorModel.nomeFantasia}" position="center">
+			<p:layoutUnit id="areaTrabalho" header="Fornecedor: #{cotacaoProdutoFornecedorFaces.cotacaoFornecedorModel.fornecedorModel.nomeFantasia}" position="center">
 
 				<h:panelGrid columns="1" style="width: 100%">
 
-					<p:fieldset legend="PRODUTOS DA COTAÇÃO Nº #{cotacaoProdutoFornecedorFaces.cotacaoProdutoFornecedorModel.cotacaoProdutoModel.cotacaoModel.id}">
+					<p:fieldset legend="PRODUTOS DA COTAÇÃO Nº #{cotacaoProdutoFornecedorFaces.cotacaoFornecedorModel.cotacaoModel.id}">
 						
 						<h:panelGrid columns="3" columnClasses="coluna45, coluna40, coluna15" style="width: 100%">
-						
+					
 							<p:outputLabel for="condicaoPagamento" value="Condição de Pagamento" />
 							<p:outputLabel for="prazoEntrega" value="Prazo de entrega" />
 							<p:outputLabel for="frete" value="Frete" />
 							
-							<h:outputLabel id="condicaoPagamento" value="#{cotacaoProdutoFornecedorFaces.cotacaoProdutoFornecedorModel.cotacaoProdutoModel.cotacaoModel.condicaoPagamento}" style="color: #CD5C5C; font-weight: bold; font-size: 16px"/>
-							<h:outputLabel id="prazoEntrega" value="#{cotacaoProdutoFornecedorFaces.cotacaoProdutoFornecedorModel.cotacaoProdutoModel.cotacaoModel.prazoEntrega}" style="color: #CD5C5C; font-weight: bold; font-size: 16px" />
-							<h:outputLabel id="frete" value="#{cotacaoProdutoFornecedorFaces.cotacaoProdutoFornecedorModel.cotacaoProdutoModel.cotacaoModel.frete}" style="color: #CD5C5C; font-weight: bold; font-size: 16px" />
+							<p:inputText id="condicaoPagamento" value="#{cotacaoProdutoFornecedorFaces.cotacaoFornecedorModel.condicaoPagamento}" required="true" maxlength="100" style="width: 98%"/>
+							<p:inputText id="prazoEntrega" value="#{cotacaoProdutoFornecedorFaces.cotacaoFornecedorModel.prazoEntrega}" required="true" maxlength="100" style="width: 98%"/>
+							<p:selectOneRadio id="frete" value="#{cotacaoProdutoFornecedorFaces.cotacaoFornecedorModel.frete}" required="true" >
+								<f:selectItem itemValue="CIF" itemLabel="CIF" />
+								<f:selectItem itemValue="FOB" itemLabel="FOB" />
+							</p:selectOneRadio>
 							
 						</h:panelGrid>
 						
 						<p:scrollPanel id="spCotacao" mode="native" style="background: none; padding: 5px; overflow: auto !important;">
 
-							<p:dataTable id="gridPesquisa" value="#{cotacaoProdutoFornecedorFaces.cotacaoProdutoFornecedorModel.grid}" var="linha" emptyMessage="Nenhum item encontrado" rowIndexVar="index" style="margin-top: 10px">
+							<p:dataTable id="gridPesquisa" value="#{cotacaoProdutoFornecedorFaces.cotacaoFornecedorModel.grid}" var="linha" emptyMessage="Nenhum item encontrado" rowIndexVar="index" style="margin-top: 10px">
 
 								<p:column styleClass="coluna30" headerText="Produto">
 									<h:outputLabel value="#{linha.cotacaoProdutoModel.produtoModel.nomePrincipal}" />
@@ -94,7 +97,7 @@
 						</p:scrollPanel>
 						
 						<p:panel style="margin-top: 5px">
-							<p:commandButton type="button" rendered="#{!empty cotacaoProdutoFornecedorFaces.cotacaoProdutoFornecedorModel.grid}" id="btnSalvar" value="Gravar" icon="salvar" onclick="cdAlterar.show()" style="margin-top: 10px" />
+							<p:commandButton type="button" rendered="#{!empty cotacaoProdutoFornecedorFaces.cotacaoFornecedorModel.grid}" id="btnSalvar" value="Gravar" icon="salvar" onclick="cdAlterar.show()" style="margin-top: 10px" />
 						</p:panel>
 
 					</p:fieldset>
